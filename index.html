@@ -19,6 +19,9 @@ body{
     color:#00ff00;
 }
 
+
+
+
 canvas{
     position:fixed;
     top:0;
@@ -94,11 +97,11 @@ canvas{
 </style>
 </head>
 <body>
-
+<audio id="sound" src="hack.mp3"></audio>
 <canvas id="matrix"></canvas>
 
 <div id="container">
-    <h1 id="title" class="flash">CYBER CHALLENGE SIMULATION</h1>
+    <h1 id="title" class="flash">YOUR DATA IS PROCCESSING TO BE STOLEN</h1>
     <div id="countdown">30</div>
     <div id="logs"></div>
 </div>
@@ -184,7 +187,7 @@ const timer=setInterval(()=>{
         document.getElementById("reveal").style.display="flex";
     }
 },1000);
-
+document.getElementById("sound").play();
 </script>
 
 </body>
