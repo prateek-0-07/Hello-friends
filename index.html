@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>your data is processing to be stolen</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:#000;
+    overflow:hidden;
+    font-family:Consolas, monospace;
+    color:#00ff00;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+}
+
+#container{
+    padding:20px;
+}
+
+#title{
+    font-size:32px;
+    text-shadow:0 0 15px #00ff00;
+    margin-bottom:15px;
+}
+
+#countdown{
+    font-size:24px;
+    color:#00ff00;
+    margin-bottom:20px;
+}
+
+#logs{
+    height:65vh;
+    overflow:hidden;
+    border:1px solid #00ff00;
+    padding:10px;
+    background:rgba(0,0,0,.6);
+}
+
+.line{
+    margin-bottom:8px;
+    animation:glow .5s ease;
+}
+
+@keyframes glow{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+.flash{
+    animation:flash 0.5s infinite alternate;
+}
+
+@keyframes flash{
+    from{opacity:1}
+    to{opacity:.5}
+}
+
+.reveal{
+    position:fixed;
+    inset:0;
+    background:black;
+    display:none;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    text-align:center;
+    z-index:999;
+}
+
+.reveal h1{
+    color:#00ff00;
+    font-size:60px;
+    margin-bottom:20px;
+}
+
+.reveal p{
+    color:white;
+    font-size:24px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<div id="container">
+    <h1 id="title" class="flash">CYBER CHALLENGE SIMULATION</h1>
+    <div id="countdown">30</div>
+    <div id="logs"></div>
+</div>
+
+<div class="reveal" id="reveal">
+    <h1>😂 PRANK COMPLETE!</h1>
+    <p>Your device is safe.<br>This was only a visual simulation.</p>
+</div>
+
+<script>
+
+// MATRIX EFFECT
+const canvas = document.getElementById("matrix");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const size = 16;
+const columns = canvas.width / size;
+const drops = [];
+
+for(let x=0;x<columns;x++) drops[x]=1;
+
+function draw(){
+    ctx.fillStyle="rgba(0,0,0,0.05)";
+    ctx.fillRect(0,0,canvas.width,canvas.height);
+
+    ctx.fillStyle="#00ff00";
+    ctx.font=size+"px monospace";
+
+    for(let i=0;i<drops.length;i++){
+        const text=chars[Math.floor(Math.random()*chars.length)];
+        ctx.fillText(text,i*size,drops[i]*size);
+
+        if(drops[i]*size>canvas.height && Math.random()>0.975)
+            drops[i]=0;
+
+        drops[i]++;
+    }
+}
+setInterval(draw,35);
+
+// LOGS
+const logs=document.getElementById("logs");
+
+const messages=[
+"Initializing cyber simulation...",
+"Loading virtual environment...",
+"Connecting to test server...",
+"Analyzing sample data...",
+"Decrypting training packets...",
+"Reading sandbox memory...",
+"Checking virtual firewall...",
+"Generating random keys...",
+"Simulating network traffic...",
+"Finalizing challenge..."
+];
+
+let msgIndex=0;
+
+const logInterval=setInterval(()=>{
+    const div=document.createElement("div");
+    div.className="line";
+    div.textContent="> "+messages[msgIndex % messages.length];
+    logs.appendChild(div);
+    logs.scrollTop=logs.scrollHeight;
+    msgIndex++;
+},900);
+
+// COUNTDOWN
+let time=30;
+
+const timer=setInterval(()=>{
+    time--;
+    document.getElementById("countdown").innerText=time;
+
+    if(time<=0){
+        clearInterval(timer);
+        clearInterval(logInterval);
+
+        document.getElementById("reveal").style.display="flex";
+    }
+},1000);
+
+</script>
+
+</body>
+</html>
