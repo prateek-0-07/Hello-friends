@@ -1,15 +1,14 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>PRATEEK — Creative Design Studio</title>
+<title>PRATEEK — Creative Digital Studio</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
@@ -29,8 +28,8 @@ html{
 
 body{
     background:#050507;
-    color:#fff;
-    font-family:"Inter",sans-serif;
+    color:#f4f4f5;
+    font-family:Inter,sans-serif;
     overflow-x:hidden;
 }
 
@@ -47,40 +46,81 @@ textarea{
 
 
 /* =========================================================
-   CUSTOM CURSOR
+   VARIABLES
+========================================================= */
+
+:root{
+    --bg:#050507;
+    --surface:#0b0b10;
+    --surface2:#111119;
+    --line:rgba(255,255,255,.09);
+    --muted:#8c8c99;
+    --white:#fff;
+    --accent:#c8ff3d;
+    --purple:#8b5cf6;
+    --blue:#4f8cff;
+}
+
+
+/* =========================================================
+   CURSOR
 ========================================================= */
 
 .cursor{
     position:fixed;
-    width:18px;
-    height:18px;
-    border:1px solid rgba(255,255,255,.8);
+    width:12px;
+    height:12px;
     border-radius:50%;
+    background:#fff;
     pointer-events:none;
     z-index:99999;
+    transform:translate(-50%,-50%);
+    mix-blend-mode:difference;
+}
+
+.cursor-ring{
+    position:fixed;
+    width:42px;
+    height:42px;
+    border:1px solid rgba(255,255,255,.7);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:99998;
     transform:translate(-50%,-50%);
     transition:
         width .25s ease,
         height .25s ease,
-        background .25s ease;
-    mix-blend-mode:difference;
+        border .25s ease;
 }
 
-.cursor-dot{
+body.cursor-active .cursor-ring{
+    width:75px;
+    height:75px;
+    border-color:var(--accent);
+}
+
+
+/* =========================================================
+   CURSOR LIGHT
+========================================================= */
+
+.cursor-light{
     position:fixed;
-    width:5px;
-    height:5px;
+    width:600px;
+    height:600px;
     border-radius:50%;
-    background:white;
     pointer-events:none;
-    z-index:100000;
-    transform:translate(-50%,-50%);
-}
+    z-index:0;
 
-.cursor.big{
-    width:55px;
-    height:55px;
-    background:#fff;
+    background:
+        radial-gradient(
+            circle,
+            rgba(200,255,61,.08) 0%,
+            rgba(139,92,246,.04) 25%,
+            transparent 70%
+        );
+
+    transform:translate(-50%,-50%);
 }
 
 
@@ -91,77 +131,72 @@ textarea{
 .background{
     position:fixed;
     inset:0;
-    pointer-events:none;
     z-index:-10;
     overflow:hidden;
+    background:
+        radial-gradient(circle at 50% 0%,
+        rgba(139,92,246,.08),
+        transparent 35%),
+        #050507;
 }
+
+
+/* grid */
 
 .grid{
     position:absolute;
-    width:200%;
-    height:200%;
-    left:-50%;
-    top:-40%;
+    inset:-100px;
 
     background-image:
-        linear-gradient(
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        ),
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.035) 1px,
-            transparent 1px
-        );
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
 
-    background-size:60px 60px;
+    background-size:70px 70px;
 
     transform:
-        perspective(700px)
-        rotateX(60deg);
+        perspective(800px)
+        rotateX(65deg)
+        translateY(180px)
+        scale(1.6);
+
+    transform-origin:center bottom;
+
+    opacity:.35;
 }
 
-.orb{
+
+/* glowing blobs */
+
+.blob{
     position:absolute;
     border-radius:50%;
-    filter:blur(90px);
-    transition:transform 1.2s cubic-bezier(.16,1,.3,1);
+    filter:blur(100px);
+    opacity:.18;
 }
 
-.orb.one{
+.blob.one{
     width:450px;
     height:450px;
-    background:#6d28d9;
-    opacity:.22;
-    left:-180px;
+    background:#7c3aed;
     top:-150px;
+    left:-150px;
 }
 
-.orb.two{
+.blob.two{
     width:400px;
     height:400px;
-    background:#06b6d4;
-    opacity:.16;
-    right:-180px;
+    background:#2563eb;
+    right:-100px;
     top:30%;
 }
 
-.orb.three{
+.blob.three{
     width:350px;
     height:350px;
-    background:#db2777;
-    opacity:.13;
-    left:35%;
+    background:#c8ff3d;
+    left:30%;
     bottom:-200px;
-}
-
-.noise{
-    position:absolute;
-    inset:0;
-    opacity:.035;
-    background-image:url(
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
-    );
+    opacity:.08;
 }
 
 
@@ -174,49 +209,64 @@ nav{
     top:0;
     left:0;
     width:100%;
-
-    padding:
-        25px
-        clamp(22px,6vw,80px);
+    height:80px;
 
     display:flex;
-    justify-content:space-between;
     align-items:center;
+    justify-content:space-between;
+
+    padding:0 5vw;
 
     z-index:1000;
 
-    background:rgba(5,5,7,.45);
-    backdrop-filter:blur(18px);
+    background:
+        linear-gradient(
+            to bottom,
+            rgba(5,5,7,.85),
+            transparent
+        );
 
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.05);
+    backdrop-filter:blur(10px);
 }
 
 .logo{
-    font-size:21px;
-    font-weight:800;
+    font-family:"Space Grotesk";
+    font-weight:700;
+    font-size:22px;
     letter-spacing:-1px;
 }
 
 .logo span{
-    color:#a78bfa;
+    color:var(--accent);
 }
 
 .nav-links{
     display:flex;
-    gap:30px;
+    gap:32px;
 }
 
 .nav-links a{
-    color:#85858d;
-    font-size:11px;
-    letter-spacing:.14em;
+    color:#aaa;
+    font-size:13px;
     transition:.3s;
 }
 
 .nav-links a:hover{
     color:#fff;
+}
+
+.nav-button{
+    border:1px solid var(--line);
+    padding:11px 18px;
+    border-radius:30px;
+    font-size:13px;
+    background:rgba(255,255,255,.04);
+    transition:.3s;
+}
+
+.nav-button:hover{
+    background:#fff;
+    color:#000;
 }
 
 
@@ -226,161 +276,521 @@ nav{
 
 .hero{
     min-height:100vh;
+    position:relative;
 
     display:flex;
     align-items:center;
 
     padding:
-        140px
-        clamp(22px,7vw,100px)
+        120px 7vw
         100px;
+
+    overflow:hidden;
 }
 
 .hero-content{
-    max-width:1100px;
+    position:relative;
+    z-index:20;
+    max-width:850px;
 }
 
-.status{
+.eyebrow{
     display:inline-flex;
     align-items:center;
     gap:9px;
 
-    color:#888;
-    font-size:11px;
-    letter-spacing:.18em;
+    padding:8px 14px;
 
-    text-transform:uppercase;
+    border:1px solid var(--line);
+    border-radius:30px;
+
+    background:rgba(255,255,255,.035);
+
+    color:#aaa;
+
+    font-size:12px;
+
+    margin-bottom:30px;
 }
 
 .status-dot{
     width:7px;
     height:7px;
-
     border-radius:50%;
-
-    background:#86efac;
-
-    box-shadow:
-        0 0 18px
-        #86efac;
+    background:var(--accent);
+    box-shadow:0 0 15px var(--accent);
 }
 
 .hero h1{
+    font-family:"Space Grotesk";
     font-size:
-        clamp(
-            60px,
-            10vw,
-            145px
-        );
+        clamp(65px,10vw,155px);
 
-    line-height:.84;
-
+    line-height:.82;
     letter-spacing:-.08em;
 
-    margin:
-        28px 0;
-
-    font-weight:800;
+    font-weight:700;
 }
 
-.gradient-text{
+.hero h1 .outline{
+    color:transparent;
+    -webkit-text-stroke:1px rgba(255,255,255,.65);
+}
+
+.hero h1 .gradient{
     background:
         linear-gradient(
             100deg,
             #fff,
-            #a78bfa,
-            #67e8f9,
+            #c8ff3d,
+            #9b7cff,
             #fff
         );
 
-    background-size:280%;
+    background-size:300%;
 
     -webkit-background-clip:text;
-    background-clip:text;
-
     color:transparent;
 
-    animation:
-        gradientMove
-        7s
-        linear
-        infinite;
+    animation:gradientMove 8s linear infinite;
 }
 
 @keyframes gradientMove{
 
-    from{
+    0%{
         background-position:0%;
     }
 
-    to{
-        background-position:280%;
+    100%{
+        background-position:300%;
     }
 
 }
 
 .hero-description{
-    max-width:620px;
+    margin-top:40px;
+    max-width:520px;
 
-    color:#85858d;
+    color:#96969f;
 
-    font-size:15px;
-
-    line-height:1.8;
+    font-size:17px;
+    line-height:1.7;
 }
 
 .hero-actions{
-    margin-top:35px;
+    margin-top:38px;
 
     display:flex;
-    gap:12px;
-
-    flex-wrap:wrap;
+    gap:15px;
 }
 
-.btn{
+.primary-button{
     display:inline-flex;
-
     align-items:center;
-
     gap:12px;
 
-    padding:
-        15px
-        22px;
+    padding:16px 24px;
 
-    border-radius:999px;
+    border-radius:40px;
 
-    font-size:12px;
+    background:#fff;
+    color:#000;
+
+    font-weight:600;
+    font-size:14px;
 
     transition:
         transform .3s,
-        box-shadow .3s,
-        border-color .3s;
+        box-shadow .3s;
 }
 
-.btn-primary{
-    background:#fff;
-    color:#050507;
+.primary-button:hover{
+    transform:translateY(-4px);
+    box-shadow:0 15px 50px rgba(255,255,255,.2);
 }
 
-.btn-primary:hover{
-    box-shadow:
-        0 15px 50px
-        rgba(255,255,255,.15);
+.secondary-button{
+    display:inline-flex;
+    align-items:center;
+
+    padding:16px 24px;
+
+    border-radius:40px;
+
+    border:1px solid var(--line);
+
+    background:rgba(255,255,255,.035);
+
+    color:#ddd;
+
+    font-size:14px;
 }
 
-.btn-outline{
-    border:
-        1px solid
-        rgba(255,255,255,.12);
-
-    color:#aaa;
-}
-
-.btn-outline:hover{
-    color:#fff;
+.secondary-button:hover{
     border-color:#555;
+}
+
+
+/* =========================================================
+   FLOATING DESIGN WORLD
+========================================================= */
+
+.design-world{
+    position:absolute;
+
+    width:650px;
+    height:650px;
+
+    right:-40px;
+    top:50%;
+
+    transform:
+        translateY(-50%)
+        perspective(1200px);
+
+    pointer-events:none;
+}
+
+.design-object{
+    position:absolute;
+
+    transform-style:preserve-3d;
+
+    transition:
+        transform .15s linear;
+}
+
+
+/* main glass panel */
+
+.main-panel{
+    width:300px;
+    height:390px;
+
+    top:110px;
+    left:160px;
+
+    border-radius:25px;
+
+    border:1px solid rgba(255,255,255,.15);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.13),
+            rgba(255,255,255,.025)
+        );
+
+    backdrop-filter:blur(18px);
+
+    box-shadow:
+        0 50px 100px rgba(0,0,0,.55),
+        inset 0 1px rgba(255,255,255,.1);
+
+    padding:22px;
+
+    transform:
+        rotateY(-20deg)
+        rotateX(8deg)
+        rotateZ(3deg);
+}
+
+
+/* fake UI */
+
+.ui-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:30px;
+}
+
+.ui-logo{
+    width:70px;
+    height:8px;
+    border-radius:20px;
+    background:#fff;
+}
+
+.ui-dot{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:var(--accent);
+}
+
+.ui-title{
+    font-size:35px;
+    line-height:1;
+    font-weight:800;
+    letter-spacing:-2px;
+}
+
+.ui-lines{
+    margin-top:25px;
+    display:grid;
+    gap:9px;
+}
+
+.ui-line{
+    height:7px;
+    border-radius:10px;
+    background:rgba(255,255,255,.1);
+}
+
+.ui-line.short{
+    width:55%;
+}
+
+.ui-image{
+    height:115px;
+    margin-top:28px;
+    border-radius:15px;
+
+    background:
+        radial-gradient(circle at 30% 30%,#c8ff3d,transparent 20%),
+        linear-gradient(135deg,#7c3aed,#111);
+
+    position:relative;
+    overflow:hidden;
+}
+
+.ui-image::after{
+    content:"";
+    position:absolute;
+    width:130px;
+    height:130px;
+    border-radius:50%;
+    background:rgba(255,255,255,.2);
+    filter:blur(10px);
+    right:-20px;
+    bottom:-40px;
+}
+
+.ui-footer{
+    display:flex;
+    justify-content:space-between;
+    margin-top:25px;
+}
+
+.ui-pill{
+    width:80px;
+    height:30px;
+    border-radius:20px;
+    background:rgba(255,255,255,.08);
+}
+
+
+/* poster */
+
+.poster{
+    width:190px;
+    height:250px;
+
+    left:30px;
+    top:40px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #ff4d6d,
+            #7c3aed
+        );
+
+    box-shadow:
+        0 40px 80px rgba(0,0,0,.5);
+
+    transform:
+        rotateY(20deg)
+        rotateX(-8deg)
+        rotateZ(-12deg);
+}
+
+.poster span{
+    display:block;
+    font-size:11px;
+    font-weight:700;
+    letter-spacing:2px;
+}
+
+.poster h3{
+    position:absolute;
+    bottom:20px;
+    left:18px;
+    right:18px;
+
+    font-size:31px;
+    line-height:.85;
+
+    letter-spacing:-2px;
+}
+
+
+/* brand card */
+
+.brand-card{
+    width:180px;
+    height:115px;
+
+    right:5px;
+    bottom:90px;
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:#e9e4d8;
+    color:#111;
+
+    transform:
+        rotateY(-20deg)
+        rotateX(8deg)
+        rotateZ(8deg);
+}
+
+.brand-card strong{
+    font-size:20px;
+}
+
+.brand-card small{
+    display:block;
+    margin-top:30px;
+}
+
+
+/* 3D orb */
+
+.orb{
+    width:110px;
+    height:110px;
+
+    right:70px;
+    top:40px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 30% 25%,
+            #fff,
+            #8b5cf6 25%,
+            #111 70%
+        );
+
+    box-shadow:
+        0 0 70px rgba(139,92,246,.5);
+
+    animation:
+        floatOrb 5s ease-in-out infinite;
+}
+
+@keyframes floatOrb{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    50%{
+        transform:
+            translateY(-30px)
+            rotate(180deg);
+    }
+
+}
+
+
+/* small objects */
+
+.mini-card{
+    width:120px;
+    height:80px;
+
+    border-radius:14px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,.15),
+            rgba(255,255,255,.03)
+        );
+
+    border:1px solid rgba(255,255,255,.1);
+
+    backdrop-filter:blur(10px);
+
+    padding:12px;
+
+    bottom:20px;
+    left:90px;
+
+    transform:
+        rotateY(25deg)
+        rotateZ(-7deg);
+}
+
+.mini-card::before{
+    content:"";
+    display:block;
+
+    width:50px;
+    height:6px;
+
+    background:var(--accent);
+    border-radius:10px;
+
+    margin-bottom:15px;
+}
+
+
+/* =========================================================
+   MARQUEE
+========================================================= */
+
+.marquee{
+    overflow:hidden;
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+
+    padding:22px 0;
+
+    white-space:nowrap;
+}
+
+.marquee-track{
+    display:inline-flex;
+    gap:45px;
+
+    animation:
+        marquee 25s linear infinite;
+}
+
+.marquee span{
+    font-family:"Space Grotesk";
+    font-size:18px;
+    font-weight:600;
+    color:#555;
+}
+
+.marquee .star{
+    color:var(--accent);
+}
+
+@keyframes marquee{
+
+    from{
+        transform:translateX(0);
+    }
+
+    to{
+        transform:translateX(-50%);
+    }
+
 }
 
 
@@ -389,32 +799,23 @@ nav{
 ========================================================= */
 
 section{
-    padding:
-        130px
-        clamp(22px,7vw,100px);
+    position:relative;
+    padding:150px 7vw;
 }
 
 .section-label{
-    color:#777;
-    font-size:11px;
-    letter-spacing:.2em;
+    color:var(--accent);
+    font-size:12px;
+    letter-spacing:3px;
     text-transform:uppercase;
-    margin-bottom:22px;
+    margin-bottom:25px;
 }
 
 .section-title{
-    font-size:
-        clamp(
-            45px,
-            7vw,
-            90px
-        );
-
-    line-height:.95;
-
-    letter-spacing:-.065em;
-
-    max-width:900px;
+    font-family:"Space Grotesk";
+    font-size:clamp(45px,7vw,100px);
+    line-height:.9;
+    letter-spacing:-.07em;
 }
 
 
@@ -422,153 +823,238 @@ section{
    SERVICES
 ========================================================= */
 
-.services{
-    margin-top:65px;
+.services-intro{
+    display:flex;
+    justify-content:space-between;
+    align-items:end;
 
+    margin-bottom:80px;
+}
+
+.services-intro p{
+    max-width:380px;
+    color:#888;
+    line-height:1.7;
+}
+
+.services-grid{
     display:grid;
-
     grid-template-columns:
-        repeat(
-            2,
-            minmax(0,1fr)
-        );
+        repeat(4,1fr);
 
-    gap:15px;
+    gap:16px;
 }
 
 .service-card{
+    min-height:310px;
+
     position:relative;
 
-    min-height:220px;
+    padding:28px;
 
-    padding:30px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.08);
-
-    border-radius:24px;
+    border:1px solid var(--line);
+    border-radius:25px;
 
     background:
-        rgba(255,255,255,.025);
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.055),
+            rgba(255,255,255,.015)
+        );
 
     overflow:hidden;
 
     transform-style:preserve-3d;
 
     transition:
-        border-color .3s,
+        border .3s,
         background .3s;
 }
 
-.service-card::before{
-    content:"";
-
-    position:absolute;
-
-    width:180px;
-    height:180px;
-
-    border-radius:50%;
+.service-card:hover{
+    border-color:rgba(200,255,61,.35);
 
     background:
-        radial-gradient(
-            circle,
-            rgba(167,139,250,.22),
-            transparent 65%
+        linear-gradient(
+            145deg,
+            rgba(200,255,61,.08),
+            rgba(255,255,255,.015)
         );
-
-    left:
-        var(--mouse-x,50%);
-
-    top:
-        var(--mouse-y,50%);
-
-    transform:
-        translate(-50%,-50%);
-
-    opacity:0;
-
-    transition:opacity .3s;
-
-    pointer-events:none;
-}
-
-.service-card:hover{
-    border-color:
-        rgba(255,255,255,.22);
-}
-
-.service-card:hover::before{
-    opacity:1;
 }
 
 .service-number{
-    color:#666;
-
-    font-size:11px;
-
-    letter-spacing:.1em;
+    font-size:12px;
+    color:#555;
 }
 
 .service-icon{
-    font-size:28px;
+    position:absolute;
 
-    margin-top:35px;
+    top:25px;
+    right:25px;
+
+    width:45px;
+    height:45px;
+
+    border-radius:50%;
+
+    display:grid;
+    place-items:center;
+
+    background:rgba(255,255,255,.06);
+
+    font-size:20px;
 }
 
 .service-card h3{
-    font-size:24px;
+    position:absolute;
+    left:28px;
+    right:28px;
+    bottom:70px;
 
-    letter-spacing:-.04em;
+    font-family:"Space Grotesk";
 
-    margin-top:18px;
+    font-size:26px;
+    line-height:1;
+
+    letter-spacing:-1.5px;
 }
 
 .service-card p{
-    color:#777;
+    position:absolute;
+    left:28px;
+    right:28px;
+    bottom:27px;
 
     font-size:12px;
-
-    line-height:1.6;
-
-    margin-top:8px;
+    color:#777;
+    line-height:1.5;
 }
 
 
 /* =========================================================
-   STATEMENT
+   SHOWCASE
 ========================================================= */
 
-.statement{
-    min-height:70vh;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
+.showcase{
+    overflow:hidden;
 }
 
-.statement h2{
-    max-width:1100px;
+.showcase-stage{
+    height:650px;
 
-    font-size:
-        clamp(
-            48px,
-            8vw,
-            110px
+    position:relative;
+
+    margin-top:80px;
+
+    perspective:1400px;
+}
+
+.showcase-card{
+    position:absolute;
+
+    width:310px;
+    height:420px;
+
+    border-radius:25px;
+
+    border:1px solid rgba(255,255,255,.13);
+
+    overflow:hidden;
+
+    box-shadow:
+        0 50px 100px rgba(0,0,0,.5);
+
+    transition:
+        transform .2s ease;
+}
+
+.showcase-card:nth-child(1){
+    left:5%;
+    top:100px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #171717,
+            #5b21b6
         );
 
-    line-height:.9;
-
-    letter-spacing:-.07em;
+    transform:
+        rotateY(20deg)
+        rotateZ(-10deg);
 }
 
-.muted{
-    color:#4b4b52;
+.showcase-card:nth-child(2){
+    left:34%;
+    top:20px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #d9ff58,
+            #8bffcc
+        );
+
+    color:#111;
+
+    transform:
+        translateZ(80px)
+        rotateZ(2deg);
+}
+
+.showcase-card:nth-child(3){
+    right:5%;
+    top:100px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #111827,
+            #2563eb
+        );
+
+    transform:
+        rotateY(-20deg)
+        rotateZ(10deg);
+}
+
+.showcase-card .card-content{
+    height:100%;
+    padding:30px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+}
+
+.big-word{
+    font-family:"Space Grotesk";
+    font-weight:900;
+    font-size:70px;
+    line-height:.8;
+    letter-spacing:-6px;
+}
+
+.fake-ui{
+    padding:20px;
+
+    border-radius:15px;
+
+    background:rgba(0,0,0,.18);
+
+    backdrop-filter:blur(10px);
+}
+
+.fake-ui div{
+    height:7px;
+    background:rgba(255,255,255,.4);
+    margin-bottom:9px;
+    border-radius:10px;
+}
+
+.fake-ui div:last-child{
+    width:55%;
 }
 
 
@@ -576,389 +1062,284 @@ section{
    CONTACT
 ========================================================= */
 
-.contact-wrapper{
-    margin-top:65px;
+.contact-section{
+    min-height:100vh;
 
     display:grid;
-
     grid-template-columns:
-        minmax(0,1.2fr)
-        minmax(280px,.6fr);
+        .9fr 1.1fr;
 
-    gap:20px;
+    gap:100px;
+
+    align-items:center;
 }
 
-.contact-panel{
-    position:relative;
+.contact-copy h2{
+    font-family:"Space Grotesk";
 
-    padding:32px;
+    font-size:
+        clamp(55px,8vw,110px);
 
-    border:
-        1px solid
-        rgba(255,255,255,.09);
+    line-height:.85;
 
-    border-radius:25px;
-
-    background:
-        rgba(255,255,255,.025);
-
-    backdrop-filter:blur(18px);
-
-    overflow:hidden;
+    letter-spacing:-.07em;
 }
 
-.contact-panel::before{
-    content:"";
+.contact-copy h2 span{
+    color:transparent;
 
-    position:absolute;
+    -webkit-text-stroke:
+        1px rgba(255,255,255,.5);
+}
 
-    width:300px;
-    height:300px;
+.contact-copy p{
+    margin-top:35px;
+
+    max-width:420px;
+
+    color:#888;
+
+    line-height:1.7;
+}
+
+.contact-orb{
+    width:260px;
+    height:260px;
+
+    margin-top:70px;
 
     border-radius:50%;
 
     background:
         radial-gradient(
-            circle,
-            rgba(124,58,237,.15),
-            transparent 70%
+            circle at 30% 25%,
+            #fff,
+            #c8ff3d 10%,
+            #8b5cf6 35%,
+            #050507 70%
         );
 
-    right:-150px;
-    top:-150px;
+    filter:blur(.2px);
 
-    pointer-events:none;
+    box-shadow:
+        0 0 100px rgba(139,92,246,.3);
+
+    animation:
+        contactOrb 8s ease-in-out infinite;
 }
 
-.form-grid{
+@keyframes contactOrb{
+
+    0%,100%{
+        transform:
+            translate(0,0)
+            rotate(0);
+    }
+
+    50%{
+        transform:
+            translate(35px,-25px)
+            rotate(180deg);
+    }
+
+}
+
+
+/* form */
+
+.contact-form{
+    padding:35px;
+
+    border-radius:30px;
+
+    border:1px solid var(--line);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(255,255,255,.07),
+            rgba(255,255,255,.02)
+        );
+
+    backdrop-filter:blur(20px);
+
+    box-shadow:
+        0 40px 100px rgba(0,0,0,.35);
+}
+
+.form-row{
     display:grid;
-
-    grid-template-columns:
-        1fr 1fr;
-
-    gap:20px;
-}
-
-.form-group{
-    margin-bottom:24px;
-}
-
-.form-group.full{
-    grid-column:
-        1 / -1;
-}
-
-.form-label{
-    display:block;
-
-    color:#777;
-
-    font-size:10px;
-
-    letter-spacing:.16em;
-
-    text-transform:uppercase;
-
-    margin-bottom:9px;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
 }
 
 .field{
+    margin-bottom:20px;
+}
+
+.field label{
+    display:block;
+
+    margin-bottom:9px;
+
+    font-size:11px;
+
+    color:#777;
+
+    text-transform:uppercase;
+
+    letter-spacing:1.5px;
+}
+
+.field input,
+.field textarea{
     width:100%;
 
-    border:0;
-
-    border-bottom:
-        1px solid
-        rgba(255,255,255,.12);
-
-    background:transparent;
-
-    color:#fff;
+    border:1px solid var(--line);
 
     outline:none;
 
-    padding:
-        13px
-        0;
+    border-radius:14px;
 
-    font-size:14px;
+    padding:15px;
 
+    background:rgba(255,255,255,.035);
+
+    color:#fff;
+
+    transition:.3s;
+}
+
+.field textarea{
+    min-height:130px;
     resize:vertical;
-
-    transition:
-        border-color .3s;
 }
 
-.field:focus{
-    border-color:#a78bfa;
+.field input:focus,
+.field textarea:focus{
+    border-color:var(--accent);
+
+    box-shadow:
+        0 0 0 3px
+        rgba(200,255,61,.05);
 }
 
-.field::placeholder{
-    color:#444;
-}
 
-
-/* =========================================================
-   SERVICE SELECTOR
-========================================================= */
+/* services selector */
 
 .service-selector{
-    display:flex;
+    display:grid;
 
-    flex-wrap:wrap;
+    grid-template-columns:
+        repeat(2,1fr);
 
     gap:8px;
 }
 
 .service-option{
-    border:
-        1px solid
-        rgba(255,255,255,.1);
+    padding:13px;
 
-    background:
-        rgba(255,255,255,.025);
+    border-radius:12px;
+
+    border:1px solid var(--line);
+
+    background:rgba(255,255,255,.025);
 
     color:#888;
 
-    padding:
-        10px
-        14px;
-
-    border-radius:999px;
-
-    font-size:11px;
-
     cursor:pointer;
-
-    transition:.25s;
-}
-
-.service-option:hover{
-    color:#fff;
-
-    border-color:#666;
-
-    transform:translateY(-2px);
-}
-
-.service-option.selected{
-    color:#fff;
-
-    border-color:#8b5cf6;
-
-    background:
-        rgba(139,92,246,.16);
-
-    box-shadow:
-        0 0 25px
-        rgba(139,92,246,.1);
-}
-
-
-/* =========================================================
-   SUBMIT
-========================================================= */
-
-.submit{
-    width:100%;
-
-    border:0;
-
-    cursor:pointer;
-
-    padding:16px 20px;
-
-    border-radius:999px;
-
-    background:#fff;
-
-    color:#050507;
-
-    font-weight:600;
 
     font-size:12px;
 
     transition:.3s;
 }
 
-.submit:hover{
-    transform:translateY(-3px);
-
-    box-shadow:
-        0 15px 45px
-        rgba(255,255,255,.14);
+.service-option:hover{
+    border-color:#555;
+    color:#fff;
 }
 
-
-/* =========================================================
-   CONTACT SIDE
-========================================================= */
-
-.side-title{
-    font-size:27px;
-
-    letter-spacing:-.04em;
-}
-
-.side-text{
-    color:#777;
-
-    font-size:13px;
-
-    line-height:1.7;
-
-    margin-top:12px;
-}
-
-.orbit{
-    height:260px;
-
-    margin-top:35px;
-
-    position:relative;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    overflow:hidden;
-
-    border-radius:20px;
-
-    border:
-        1px solid
-        rgba(255,255,255,.06);
+.service-option.selected{
+    border-color:var(--accent);
 
     background:
-        radial-gradient(
-            circle,
-            rgba(139,92,246,.12),
-            transparent 65%
-        );
+        rgba(200,255,61,.08);
+
+    color:var(--accent);
 }
 
-.ring{
-    position:absolute;
 
-    width:160px;
-    height:70px;
+/* budget */
 
-    border:
-        1px solid
-        rgba(167,139,250,.35);
-
-    border-radius:50%;
-
-    transform:
-        rotateX(65deg)
-        rotateZ(20deg);
-
-    animation:
-        orbit 6s
-        linear
-        infinite;
+.choice-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
 }
 
-.ring.two{
-    width:110px;
-    height:45px;
+.choice{
+    padding:10px 14px;
 
-    transform:
-        rotateX(65deg)
-        rotateZ(-35deg);
+    border:1px solid var(--line);
 
-    animation-duration:4s;
+    border-radius:30px;
+
+    color:#777;
+
+    cursor:pointer;
+
+    font-size:12px;
+
+    transition:.3s;
 }
 
-@keyframes orbit{
-
-    from{
-        transform:
-            rotateX(65deg)
-            rotateZ(0deg);
-    }
-
-    to{
-        transform:
-            rotateX(65deg)
-            rotateZ(360deg);
-    }
-
-}
-
-.planet{
-    width:15px;
-    height:15px;
-
-    border-radius:50%;
-
+.choice.selected{
     background:#fff;
-
-    box-shadow:
-        0 0 35px
-        #a78bfa;
+    color:#000;
+    border-color:#fff;
 }
 
-.contact-meta{
-    margin-top:22px;
 
-    display:grid;
+/* submit */
 
-    gap:10px;
-}
+.submit-button{
+    width:100%;
 
-.meta{
-    padding:14px;
+    padding:18px;
 
-    border:
-        1px solid
-        rgba(255,255,255,.06);
+    border:none;
 
     border-radius:14px;
 
-    color:#777;
+    background:var(--accent);
 
-    font-size:11px;
+    color:#050507;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:.3s;
 }
 
-.meta strong{
-    display:block;
+.submit-button:hover{
+    transform:translateY(-3px);
 
-    color:#ddd;
-
-    margin-bottom:4px;
+    box-shadow:
+        0 20px 50px
+        rgba(200,255,61,.15);
 }
 
-
-/* =========================================================
-   SUCCESS
-========================================================= */
-
-.success{
-    display:none;
-
-    padding:20px;
+.form-status{
+    margin-top:15px;
 
     text-align:center;
 
-    border-radius:18px;
+    font-size:12px;
 
-    background:
-        rgba(134,239,172,.07);
+    color:#777;
 
-    border:
-        1px solid
-        rgba(134,239,172,.2);
-
-    color:#bbf7d0;
-
-    font-size:13px;
-}
-
-.success.show{
-    display:block;
+    min-height:18px;
 }
 
 
@@ -968,60 +1349,42 @@ section{
 
 footer{
     padding:
-        70px
-        clamp(22px,7vw,100px)
-        35px;
+        40px 7vw;
 
-    border-top:
-        1px solid
-        rgba(255,255,255,.07);
-}
+    border-top:1px solid var(--line);
 
-.footer-row{
     display:flex;
 
     justify-content:space-between;
 
-    align-items:center;
-}
-
-.footer-logo{
-    font-size:35px;
-
-    font-weight:800;
-
-    letter-spacing:-.06em;
-}
-
-.footer-copy{
     color:#555;
 
-    font-size:11px;
-
-    margin-top:40px;
+    font-size:12px;
 }
 
 
 /* =========================================================
-   REVEAL
+   REVEAL ANIMATION
 ========================================================= */
 
 .reveal{
     opacity:0;
 
     transform:
-        translateY(50px);
+        translateY(70px)
+        scale(.97);
 
     transition:
         opacity 1s ease,
-        transform 1s cubic-bezier(.16,1,.3,1);
+        transform 1s cubic-bezier(.2,.8,.2,1);
 }
 
 .reveal.visible{
     opacity:1;
 
     transform:
-        translateY(0);
+        translateY(0)
+        scale(1);
 }
 
 
@@ -1029,68 +1392,134 @@ footer{
    RESPONSIVE
 ========================================================= */
 
-@media(max-width:750px){
+@media(max-width:1000px){
+
+    .design-world{
+        opacity:.35;
+        right:-260px;
+    }
+
+    .services-grid{
+        grid-template-columns:
+            repeat(2,1fr);
+    }
+
+    .contact-section{
+        grid-template-columns:1fr;
+        gap:60px;
+    }
+
+}
+
+@media(max-width:700px){
+
+    body{
+        cursor:auto;
+    }
+
+    .cursor,
+    .cursor-ring,
+    .cursor-light{
+        display:none;
+    }
+
+    nav{
+        height:70px;
+        padding:0 20px;
+    }
 
     .nav-links{
         display:none;
     }
 
+    .nav-button{
+        padding:9px 14px;
+    }
+
     .hero{
-        padding-top:150px;
+        padding:
+            120px 22px
+            80px;
     }
-
-    .services{
-        grid-template-columns:1fr;
-    }
-
-    .contact-wrapper{
-        grid-template-columns:1fr;
-    }
-
-    .form-grid{
-        grid-template-columns:1fr;
-    }
-
-    .form-group.full{
-        grid-column:auto;
-    }
-
-    .footer-row{
-        align-items:flex-start;
-
-        flex-direction:column;
-
-        gap:20px;
-    }
-
-}
-
-@media(max-width:500px){
 
     .hero h1{
-        font-size:60px;
+        font-size:
+            clamp(58px,18vw,100px);
+    }
+
+    .hero-description{
+        font-size:15px;
+    }
+
+    .hero-actions{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+
+    .design-world{
+        display:none;
     }
 
     section{
-        padding-top:90px;
-        padding-bottom:90px;
+        padding:
+            100px 22px;
     }
 
-    .contact-panel{
+    .services-intro{
+        display:block;
+    }
+
+    .services-intro p{
+        margin-top:25px;
+    }
+
+    .services-grid{
+        grid-template-columns:1fr;
+    }
+
+    .showcase-stage{
+        height:1100px;
+    }
+
+    .showcase-card{
+        width:280px;
+        height:380px;
+    }
+
+    .showcase-card:nth-child(1){
+        left:0;
+        top:0;
+    }
+
+    .showcase-card:nth-child(2){
+        left:30px;
+        top:300px;
+    }
+
+    .showcase-card:nth-child(3){
+        left:0;
+        top:620px;
+    }
+
+    .form-row{
+        grid-template-columns:1fr;
+    }
+
+    .contact-form{
         padding:22px;
     }
 
-}
+    .service-selector{
+        grid-template-columns:1fr;
+    }
 
-@media(prefers-reduced-motion:reduce){
+    footer{
+        padding:
+            30px 22px;
 
-    *,
-    *::before,
-    *::after{
-        animation-duration:.01ms !important;
-        animation-iteration-count:1 !important;
-        scroll-behavior:auto !important;
-        transition-duration:.01ms !important;
+        flex-direction:column;
+
+        gap:10px;
     }
 
 }
@@ -1107,7 +1536,8 @@ footer{
 ======================================================= -->
 
 <div class="cursor"></div>
-<div class="cursor-dot"></div>
+<div class="cursor-ring"></div>
+<div class="cursor-light"></div>
 
 
 <!-- =======================================================
@@ -1118,17 +1548,15 @@ footer{
 
     <div class="grid"></div>
 
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-    <div class="orb three"></div>
-
-    <div class="noise"></div>
+    <div class="blob one"></div>
+    <div class="blob two"></div>
+    <div class="blob three"></div>
 
 </div>
 
 
 <!-- =======================================================
-     NAVIGATION
+     NAV
 ======================================================= -->
 
 <nav>
@@ -1139,19 +1567,15 @@ footer{
 
     <div class="nav-links">
 
-        <a href="#work">
-            WORK
-        </a>
-
-        <a href="#services">
-            SERVICES
-        </a>
-
-        <a href="#contact">
-            CONTACT
-        </a>
+        <a href="#services">Services</a>
+        <a href="#work">Work</a>
+        <a href="#contact">Contact</a>
 
     </div>
+
+    <a href="#contact" class="nav-button magnetic">
+        Let's Talk
+    </a>
 
 </nav>
 
@@ -1160,61 +1584,190 @@ footer{
      HERO
 ======================================================= -->
 
-<header class="hero">
+<main>
 
-    <div class="hero-content reveal">
+<section class="hero">
 
-        <div class="status">
+    <div class="hero-content">
+
+        <div class="eyebrow reveal">
 
             <span class="status-dot"></span>
 
-            AVAILABLE FOR CREATIVE PROJECTS
+            Creative Digital Studio
 
         </div>
 
 
-        <h1>
+        <h1 class="reveal">
 
             DESIGN<br>
 
-            <span class="gradient-text">
-                WITHOUT LIMITS.
-            </span>
+            <span class="outline">BEYOND</span><br>
+
+            <span class="gradient">LIMITS.</span>
 
         </h1>
 
 
-        <p class="hero-description">
+        <p class="hero-description reveal">
 
-            Creative design solutions for brands,
-            businesses and digital experiences —
-            from visual identity and advertising to
-            3D, UI/UX and motion.
+            I create visual experiences that combine
+            graphic design, 3D, UI/UX, branding,
+            advertising and motion into one
+            immersive digital language.
 
         </p>
 
 
-        <div class="hero-actions">
+        <div class="hero-actions reveal">
 
-            <a
-                href="#services"
-                class="btn btn-primary magnetic"
-            >
-                EXPLORE SERVICES →
+            <a href="#work" class="primary-button magnetic">
+
+                Explore Work
+
+                <span>↗</span>
+
             </a>
 
-            <a
-                href="#contact"
-                class="btn btn-outline magnetic"
-            >
-                START A PROJECT
+            <a href="#contact" class="secondary-button magnetic">
+
+                Start a Project
+
             </a>
 
         </div>
 
     </div>
 
-</header>
+
+    <!-- 3D DESIGN WORLD -->
+
+    <div class="design-world" id="designWorld">
+
+
+        <div class="design-object poster" data-depth="2">
+
+            <span>CREATIVE / 01</span>
+
+            <h3>
+                MAKE<br>
+                NOISE.
+            </h3>
+
+        </div>
+
+
+        <div class="design-object main-panel" data-depth="1">
+
+            <div class="ui-top">
+
+                <div class="ui-logo"></div>
+
+                <div class="ui-dot"></div>
+
+            </div>
+
+
+            <div class="ui-title">
+
+                DIGITAL<br>
+                EXPERIENCE
+
+            </div>
+
+
+            <div class="ui-lines">
+
+                <div class="ui-line"></div>
+
+                <div class="ui-line short"></div>
+
+                <div class="ui-line"></div>
+
+            </div>
+
+
+            <div class="ui-image"></div>
+
+
+            <div class="ui-footer">
+
+                <div class="ui-pill"></div>
+
+                <div class="ui-pill"></div>
+
+            </div>
+
+        </div>
+
+
+        <div class="design-object brand-card" data-depth="3">
+
+            <strong>
+                BRAND/
+            </strong>
+
+            <small>
+                BUSINESS<br>
+                SYSTEMS
+            </small>
+
+        </div>
+
+
+        <div class="design-object orb" data-depth="4"></div>
+
+
+        <div class="design-object mini-card" data-depth="5"></div>
+
+
+    </div>
+
+</section>
+
+
+<!-- =======================================================
+     MARQUEE
+======================================================= -->
+
+<div class="marquee">
+
+    <div class="marquee-track">
+
+        <span>GRAPHIC DESIGN</span>
+        <span class="star">✦</span>
+
+        <span>3D MODELING</span>
+        <span class="star">✦</span>
+
+        <span>UI / UX</span>
+        <span class="star">✦</span>
+
+        <span>BRANDING</span>
+        <span class="star">✦</span>
+
+        <span>MOTION</span>
+        <span class="star">✦</span>
+
+        <span>ADVERTISING</span>
+        <span class="star">✦</span>
+
+        <span>GRAPHIC DESIGN</span>
+        <span class="star">✦</span>
+
+        <span>3D MODELING</span>
+        <span class="star">✦</span>
+
+        <span>UI / UX</span>
+        <span class="star">✦</span>
+
+        <span>BRANDING</span>
+        <span class="star">✦</span>
+
+    </div>
+
+</div>
 
 
 <!-- =======================================================
@@ -1223,201 +1776,216 @@ footer{
 
 <section id="services">
 
-    <div class="section-label reveal">
-        WHAT I CREATE / 01
+    <div class="services-intro">
+
+        <div>
+
+            <div class="section-label reveal">
+                What I Create
+            </div>
+
+            <h2 class="section-title reveal">
+                CREATIVE<br>
+                SERVICES.
+            </h2>
+
+        </div>
+
+
+        <p class="reveal">
+
+            From a single poster to a complete
+            digital brand experience — every visual
+            is designed to communicate, attract and
+            create impact.
+
+        </p>
+
     </div>
 
 
-    <h2 class="section-title reveal">
-
-        Ideas into
-        <span class="gradient-text">
-            visual experiences.
-        </span>
-
-    </h2>
+    <div class="services-grid">
 
 
-    <div class="services">
+        <article class="service-card tilt reveal">
 
-
-        <article class="service-card reveal">
-
-            <div class="service-number">
-                01 / CREATIVE
-            </div>
+            <span class="service-number">
+                01
+            </span>
 
             <div class="service-icon">
                 ✦
             </div>
 
             <h3>
-                Graphic Design
+                Graphic<br>
+                Design
             </h3>
 
             <p>
-                Visual concepts, social creatives,
-                digital artwork and professional
-                marketing designs.
+                Social creatives, visual compositions,
+                marketing graphics and digital artwork.
             </p>
 
         </article>
 
 
-        <article class="service-card reveal">
+        <article class="service-card tilt reveal">
 
-            <div class="service-number">
-                02 / 3D
-            </div>
+            <span class="service-number">
+                02
+            </span>
 
             <div class="service-icon">
                 ◈
             </div>
 
             <h3>
-                3D Design & Modeling
+                3D Design<br>
+                & Modeling
             </h3>
 
             <p>
-                Product visualization, 3D assets,
-                scenes, renders and creative
-                3D compositions.
+                3D models, product visuals,
+                renders and immersive scenes.
             </p>
 
         </article>
 
 
-        <article class="service-card reveal">
+        <article class="service-card tilt reveal">
 
-            <div class="service-number">
-                03 / ADVERTISING
-            </div>
+            <span class="service-number">
+                03
+            </span>
 
             <div class="service-icon">
                 ↗
             </div>
 
             <h3>
-                Advertising & Creative Campaigns
+                Advertising<br>
+                & Campaigns
             </h3>
 
             <p>
-                Campaign visuals, promotional
-                creatives, digital advertising
-                and brand communication.
+                High-impact ad creatives,
+                campaign visuals and promotional design.
             </p>
 
         </article>
 
 
-        <article class="service-card reveal">
+        <article class="service-card tilt reveal">
 
-            <div class="service-number">
-                04 / DIGITAL
-            </div>
-
-            <div class="service-icon">
-                ⌘
-            </div>
-
-            <h3>
-                UI/UX Design
-            </h3>
-
-            <p>
-                Modern interfaces, user experiences,
-                landing pages and digital products.
-            </p>
-
-        </article>
-
-
-        <article class="service-card reveal">
-
-            <div class="service-number">
-                05 / MARKETING
-            </div>
-
-            <div class="service-icon">
-                ▣
-            </div>
-
-            <h3>
-                Posters, Banners & Marketing Collateral
-            </h3>
-
-            <p>
-                Posters, banners, brochures,
-                promotional material and
-                business communication assets.
-            </p>
-
-        </article>
-
-
-        <article class="service-card reveal">
-
-            <div class="service-number">
-                06 / BRAND
-            </div>
+            <span class="service-number">
+                04
+            </span>
 
             <div class="service-icon">
                 ◎
             </div>
 
             <h3>
-                Brand & Business Design
+                UI / UX<br>
+                Design
             </h3>
 
             <p>
-                Brand visuals, business presentations,
-                identity systems and professional
-                communication design.
+                Websites, apps, dashboards,
+                interfaces and digital experiences.
             </p>
 
         </article>
 
 
-        <article class="service-card reveal">
+        <article class="service-card tilt reveal">
 
-            <div class="service-number">
-                07 / MOTION
-            </div>
+            <span class="service-number">
+                05
+            </span>
 
             <div class="service-icon">
-                ◌
+                ▣
             </div>
 
             <h3>
-                Motion Graphics & Animation
+                Posters &<br>
+                Banners
             </h3>
 
             <p>
-                Animated graphics, promotional motion,
-                product animation and visual storytelling.
+                Posters, banners, event graphics,
+                brochures and marketing collateral.
             </p>
 
         </article>
 
 
-        <article class="service-card reveal">
+        <article class="service-card tilt reveal">
 
-            <div class="service-number">
-                08 / CUSTOM
+            <span class="service-number">
+                06
+            </span>
+
+            <div class="service-icon">
+                ◉
             </div>
+
+            <h3>
+                Brand &<br>
+                Business Design
+            </h3>
+
+            <p>
+                Brand assets, presentations,
+                business materials and visual systems.
+            </p>
+
+        </article>
+
+
+        <article class="service-card tilt reveal">
+
+            <span class="service-number">
+                07
+            </span>
+
+            <div class="service-icon">
+                ▶
+            </div>
+
+            <h3>
+                Motion Graphics<br>
+                & Animation
+            </h3>
+
+            <p>
+                Animated visuals, promotional motion,
+                reels and digital storytelling.
+            </p>
+
+        </article>
+
+
+        <article class="service-card tilt reveal">
+
+            <span class="service-number">
+                08
+            </span>
 
             <div class="service-icon">
                 +
             </div>
 
             <h3>
-                Custom Creative Solutions
+                Custom Creative<br>
+                Solutions
             </h3>
 
             <p>
-                Have something different in mind?
-                Let's create a solution around
-                your specific idea.
+                Unique visual solutions built around
+                your specific project requirements.
             </p>
 
         </article>
@@ -1429,26 +1997,112 @@ footer{
 
 
 <!-- =======================================================
-     STATEMENT
+     SHOWCASE
 ======================================================= -->
 
-<section class="statement">
+<section id="work" class="showcase">
 
-    <h2 class="reveal">
+    <div class="section-label reveal">
+        Selected Visual Direction
+    </div>
 
-        DON'T JUST
-        <span class="muted">
-            LOOK.
-        </span>
-
-        <br>
-
-        MAKE IT
-        <span class="gradient-text">
-            FELT.
-        </span>
-
+    <h2 class="section-title reveal">
+        VISUAL<br>
+        EXPERIENCES.
     </h2>
+
+
+    <div class="showcase-stage" id="showcaseStage">
+
+
+        <div class="showcase-card reveal">
+
+            <div class="card-content">
+
+                <div>
+
+                    <small>
+                        POSTER / CAMPAIGN
+                    </small>
+
+                    <div class="big-word">
+                        CREATE
+                    </div>
+
+                </div>
+
+                <div class="fake-ui">
+
+                    <div></div>
+                    <div></div>
+                    <div></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="showcase-card reveal">
+
+            <div class="card-content">
+
+                <div>
+
+                    <small>
+                        BRAND / DIGITAL
+                    </small>
+
+                    <div class="big-word">
+                        FUTURE
+                    </div>
+
+                </div>
+
+                <div class="fake-ui">
+
+                    <div></div>
+                    <div></div>
+                    <div></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="showcase-card reveal">
+
+            <div class="card-content">
+
+                <div>
+
+                    <small>
+                        UI / UX
+                    </small>
+
+                    <div class="big-word">
+                        SYSTEM
+                    </div>
+
+                </div>
+
+                <div class="fake-ui">
+
+                    <div></div>
+                    <div></div>
+                    <div></div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
 
 </section>
 
@@ -1457,359 +2111,206 @@ footer{
      CONTACT
 ======================================================= -->
 
-<section id="contact">
+<section id="contact" class="contact-section">
 
-    <div class="section-label reveal">
-        LET'S WORK TOGETHER / 02
+
+    <div class="contact-copy">
+
+        <div class="section-label reveal">
+            Start Something
+        </div>
+
+        <h2 class="reveal">
+
+            LET'S<br>
+
+            <span>CREATE</span><br>
+
+            TOGETHER.
+
+        </h2>
+
+        <p class="reveal">
+
+            Have a brand, product, campaign,
+            website or visual idea?
+
+            Tell me what you're building.
+
+        </p>
+
+
+        <div class="contact-orb"></div>
+
     </div>
 
 
-    <h2 class="section-title reveal">
+    <!-- FORM -->
 
-        Have an idea?
-        <span class="gradient-text">
-            Let's build it.
-        </span>
+    <form class="contact-form reveal" id="contactForm">
 
-    </h2>
 
+        <div class="form-row">
 
-    <div class="contact-wrapper">
+            <div class="field">
 
+                <label>
+                    Your Name
+                </label>
 
-        <!-- FORM -->
+                <input
+                    type="text"
+                    placeholder="Prateek"
+                    required
+                >
 
-        <div class="contact-panel reveal">
+            </div>
 
-            <form id="contactForm">
 
+            <div class="field">
 
-                <div class="form-grid">
+                <label>
+                    Email
+                </label>
 
-
-                    <div class="form-group">
-
-                        <label class="form-label">
-                            Your name
-                        </label>
-
-                        <input
-                            class="field"
-                            id="name"
-                            type="text"
-                            placeholder="Your name"
-                            required
-                        >
-
-                    </div>
-
-
-                    <div class="form-group">
-
-                        <label class="form-label">
-                            Email
-                        </label>
-
-                        <input
-                            class="field"
-                            id="email"
-                            type="email"
-                            placeholder="you@example.com"
-                            required
-                        >
-
-                    </div>
-
-
-                    <!-- SERVICES -->
-
-                    <div class="form-group full">
-
-                        <label class="form-label">
-                            What do you need designed?
-                        </label>
-
-
-                        <div class="service-selector">
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="Graphic Design"
-                            >
-                                Graphic Design
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="3D Design & Modeling"
-                            >
-                                3D Design & Modeling
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="Advertising & Creative Campaigns"
-                            >
-                                Advertising & Creative Campaigns
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="UI/UX Design"
-                            >
-                                UI/UX Design
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="Posters, Banners & Marketing Collateral"
-                            >
-                                Posters, Banners & Marketing Collateral
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="Brand & Business Design"
-                            >
-                                Brand & Business Design
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="Motion Graphics & Animation"
-                            >
-                                Motion Graphics & Animation
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option"
-                                data-service="Custom Creative Solutions"
-                            >
-                                Custom Creative Solutions
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- BUDGET -->
-
-                    <div class="form-group full">
-
-                        <label class="form-label">
-                            Approximate budget
-                        </label>
-
-
-                        <div class="service-selector">
-
-
-                            <button
-                                type="button"
-                                class="service-option budget-option"
-                            >
-                                ₹10K – ₹25K
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option budget-option"
-                            >
-                                ₹25K – ₹50K
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option budget-option"
-                            >
-                                ₹50K – ₹1L
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option budget-option"
-                            >
-                                ₹1L+
-                            </button>
-
-
-                            <button
-                                type="button"
-                                class="service-option budget-option"
-                            >
-                                Let's Discuss
-                            </button>
-
-
-                        </div>
-
-                    </div>
-
-
-                    <!-- MESSAGE -->
-
-                    <div class="form-group full">
-
-                        <label class="form-label">
-                            Project brief
-                        </label>
-
-                        <textarea
-                            class="field"
-                            id="message"
-                            rows="4"
-                            placeholder="Tell me about your idea, project or business..."
-                            required
-                        ></textarea>
-
-                    </div>
-
-
-                    <div class="form-group full">
-
-                        <button
-                            class="submit"
-                            type="submit"
-                        >
-                            SEND PROJECT REQUEST →
-                        </button>
-
-                    </div>
-
-
-                </div>
-
-            </form>
-
-
-            <div
-                class="success"
-                id="successMessage"
-            >
-
-                ✓ Project request prepared successfully.
-
-                <br><br>
-
-                Your selected services and project
-                information are ready to be connected
-                to your email or backend.
+                <input
+                    type="email"
+                    placeholder="you@example.com"
+                    required
+                >
 
             </div>
 
         </div>
 
 
-        <!-- CONTACT INFO -->
+        <!-- SERVICES -->
 
-        <aside class="contact-panel reveal">
+        <div class="field">
+
+            <label>
+                What do you need?
+            </label>
 
 
-            <div>
+            <div class="service-selector">
 
-                <div class="section-label">
-                    DIRECT CONNECTION
+
+                <div class="service-option">
+                    Graphic Design
                 </div>
 
 
-                <h3 class="side-title">
-                    Let's make something
-                    <span class="gradient-text">
-                        remarkable.
-                    </span>
-                </h3>
-
-
-                <p class="side-text">
-
-                    No complicated process.
-                    Tell me what you're trying to
-                    create and I'll help turn the
-                    idea into a visual experience.
-
-                </p>
-
-
-                <div class="orbit">
-
-                    <div class="ring"></div>
-
-                    <div class="ring two"></div>
-
-                    <div class="planet"></div>
-
+                <div class="service-option">
+                    3D Design & Modeling
                 </div>
 
 
-                <div class="contact-meta">
+                <div class="service-option">
+                    Advertising & Campaigns
+                </div>
 
 
-                    <div class="meta">
-
-                        <strong>
-                            Creative Direction
-                        </strong>
-
-                        From concept to final visual.
-
-                    </div>
+                <div class="service-option">
+                    UI / UX Design
+                </div>
 
 
-                    <div class="meta">
-
-                        <strong>
-                            Multiple Services
-                        </strong>
-
-                        Combine multiple design
-                        requirements in one project.
-
-                    </div>
+                <div class="service-option">
+                    Posters & Banners
+                </div>
 
 
-                    <div class="meta">
-
-                        <strong>
-                            Response
-                        </strong>
-
-                        Usually within 24–48 hours.
-
-                    </div>
+                <div class="service-option">
+                    Brand & Business Design
+                </div>
 
 
+                <div class="service-option">
+                    Motion Graphics
+                </div>
+
+
+                <div class="service-option">
+                    Custom Solution
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- BUDGET -->
+
+        <div class="field">
+
+            <label>
+                Approx. Budget
+            </label>
+
+
+            <div class="choice-row">
+
+                <div class="choice">
+                    ₹10K – ₹25K
+                </div>
+
+                <div class="choice">
+                    ₹25K – ₹50K
+                </div>
+
+                <div class="choice">
+                    ₹50K – ₹1L
+                </div>
+
+                <div class="choice">
+                    ₹1L+
                 </div>
 
             </div>
 
+        </div>
 
-        </aside>
+
+        <!-- MESSAGE -->
+
+        <div class="field">
+
+            <label>
+                Tell me about the project
+            </label>
+
+            <textarea
+                placeholder="What are you trying to create?"
+                required
+            ></textarea>
+
+        </div>
 
 
-    </div>
+        <button
+            type="submit"
+            class="submit-button magnetic"
+        >
+
+            SEND PROJECT REQUEST ↗
+
+        </button>
+
+
+        <div
+            class="form-status"
+            id="formStatus"
+        ></div>
+
+
+    </form>
 
 </section>
+
+
+</main>
 
 
 <!-- =======================================================
@@ -1818,26 +2319,13 @@ footer{
 
 <footer>
 
-    <div class="footer-row">
+    <span>
+        © 2026 PRATEEK. CREATIVE STUDIO
+    </span>
 
-        <div class="footer-logo">
-            PRATEEK<span style="color:#a78bfa">.</span>
-        </div>
-
-
-        <a
-            href="#contact"
-            class="btn btn-primary magnetic"
-        >
-            START A PROJECT →
-        </a>
-
-    </div>
-
-
-    <p class="footer-copy">
-        © 2026 Prateek. Creative design & digital experiences.
-    </p>
+    <span>
+        DESIGN · 3D · DIGITAL · MOTION
+    </span>
 
 </footer>
 
@@ -1848,6 +2336,7 @@ footer{
 
 <script>
 
+
 /* =========================================================
    CURSOR
 ========================================================= */
@@ -1855,332 +2344,438 @@ footer{
 const cursor =
     document.querySelector(".cursor");
 
-const cursorDot =
-    document.querySelector(".cursor-dot");
+const ring =
+    document.querySelector(".cursor-ring");
 
-let mouseX =
-    window.innerWidth / 2;
-
-let mouseY =
-    window.innerHeight / 2;
-
-let cursorX =
-    mouseX;
-
-let cursorY =
-    mouseY;
+const light =
+    document.querySelector(".cursor-light");
 
 
-document.addEventListener(
-    "mousemove",
-    event => {
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
 
-        mouseX =
-            event.clientX;
+let ringX = mouseX;
+let ringY = mouseY;
 
-        mouseY =
-            event.clientY;
-
-        cursorDot.style.left =
-            mouseX + "px";
-
-        cursorDot.style.top =
-            mouseY + "px";
-
-    }
-);
+let lightX = mouseX;
+let lightY = mouseY;
 
 
-function animateCursor(){
+window.addEventListener("mousemove",(e)=>{
 
-    cursorX +=
-        (mouseX - cursorX) * .15;
-
-    cursorY +=
-        (mouseY - cursorY) * .15;
-
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 
     cursor.style.left =
-        cursorX + "px";
+        mouseX + "px";
 
     cursor.style.top =
-        cursorY + "px";
+        mouseY + "px";
+
+});
+
+
+function cursorAnimation(){
+
+    ringX +=
+        (mouseX - ringX) * .13;
+
+    ringY +=
+        (mouseY - ringY) * .13;
+
+    lightX +=
+        (mouseX - lightX) * .06;
+
+    lightY +=
+        (mouseY - lightY) * .06;
+
+
+    ring.style.left =
+        ringX + "px";
+
+    ring.style.top =
+        ringY + "px";
+
+
+    light.style.left =
+        lightX + "px";
+
+    light.style.top =
+        lightY + "px";
 
 
     requestAnimationFrame(
-        animateCursor
+        cursorAnimation
     );
 
 }
 
-animateCursor();
+cursorAnimation();
+
+
+/* cursor hover */
+
+document.querySelectorAll(
+    "a,button,.service-option,.choice,.tilt"
+).forEach(el=>{
+
+    el.addEventListener(
+        "mouseenter",
+        ()=>{
+            document.body.classList.add(
+                "cursor-active"
+            );
+        }
+    );
+
+    el.addEventListener(
+        "mouseleave",
+        ()=>{
+            document.body.classList.remove(
+                "cursor-active"
+            );
+        }
+    );
+
+});
 
 
 /* =========================================================
-   CURSOR HOVER
+   HERO 3D MOUSE PARALLAX
 ========================================================= */
 
-document
-    .querySelectorAll(
-        "a,button,.service-card"
-    )
-    .forEach(element => {
+const world =
+    document.getElementById(
+        "designWorld"
+    );
+
+const objects =
+    document.querySelectorAll(
+        ".design-object"
+    );
 
 
-        element.addEventListener(
-            "mouseenter",
-            () => {
+let targetPX = 0;
+let targetPY = 0;
 
-                cursor.classList.add(
-                    "big"
-                );
-
-            }
-        );
+let currentPX = 0;
+let currentPY = 0;
 
 
-        element.addEventListener(
-            "mouseleave",
-            () => {
-
-                cursor.classList.remove(
-                    "big"
-                );
-
-            }
-        );
-
-    });
-
-
-/* =========================================================
-   BACKGROUND PARALLAX
-========================================================= */
-
-const orbOne =
-    document.querySelector(".orb.one");
-
-const orbTwo =
-    document.querySelector(".orb.two");
-
-const orbThree =
-    document.querySelector(".orb.three");
-
-
-document.addEventListener(
+window.addEventListener(
     "mousemove",
-    event => {
+    e=>{
 
         const x =
-            event.clientX /
-            window.innerWidth -
+            (e.clientX /
+            window.innerWidth) -
             .5;
 
         const y =
-            event.clientY /
-            window.innerHeight -
+            (e.clientY /
+            window.innerHeight) -
             .5;
 
 
-        orbOne.style.transform =
-            `translate(${x * 45}px,${y * 40}px)`;
-
-
-        orbTwo.style.transform =
-            `translate(${x * -35}px,${y * -30}px)`;
-
-
-        orbThree.style.transform =
-            `translate(${x * 25}px,${y * 25}px)`;
+        targetPX = x;
+        targetPY = y;
 
     }
 );
 
 
-/* =========================================================
-   SERVICE CARD SPOTLIGHT
-========================================================= */
+function animateWorld(){
 
-document
-    .querySelectorAll(".service-card")
-    .forEach(card => {
+    currentPX +=
+        (targetPX - currentPX) * .06;
 
-
-        card.addEventListener(
-            "mousemove",
-            event => {
-
-                const rect =
-                    card.getBoundingClientRect();
+    currentPY +=
+        (targetPY - currentPY) * .06;
 
 
-                const x =
-                    event.clientX -
-                    rect.left;
+    objects.forEach(obj=>{
+
+        const depth =
+            Number(
+                obj.dataset.depth || 1
+            );
 
 
-                const y =
-                    event.clientY -
-                    rect.top;
+        const x =
+            currentPX * depth * 35;
+
+        const y =
+            currentPY * depth * 35;
 
 
-                const rotateX =
-                    ((y - rect.height / 2) /
-                    (rect.height / 2)) *
-                    -5;
+        obj.style.marginLeft =
+            x + "px";
 
-
-                const rotateY =
-                    ((x - rect.width / 2) /
-                    (rect.width / 2)) *
-                    5;
-
-
-                card.style.transform =
-                    `perspective(900px)
-                     rotateX(${rotateX}deg)
-                     rotateY(${rotateY}deg)
-                     scale(1.015)`;
-
-
-                card.style.setProperty(
-                    "--mouse-x",
-                    x + "px"
-                );
-
-
-                card.style.setProperty(
-                    "--mouse-y",
-                    y + "px"
-                );
-
-            }
-        );
-
-
-        card.addEventListener(
-            "mouseleave",
-            () => {
-
-                card.style.transform =
-                    "perspective(900px) rotateX(0) rotateY(0) scale(1)";
-
-            }
-        );
+        obj.style.marginTop =
+            y + "px";
 
     });
+
+
+    requestAnimationFrame(
+        animateWorld
+    );
+
+}
+
+animateWorld();
+
+
+/* =========================================================
+   3D TILT CARDS
+========================================================= */
+
+document.querySelectorAll(
+    ".tilt"
+).forEach(card=>{
+
+    card.addEventListener(
+        "mousemove",
+        e=>{
+
+            const rect =
+                card.getBoundingClientRect();
+
+
+            const x =
+                e.clientX - rect.left;
+
+            const y =
+                e.clientY - rect.top;
+
+
+            const centerX =
+                rect.width / 2;
+
+            const centerY =
+                rect.height / 2;
+
+
+            const rotateX =
+                ((y-centerY) /
+                centerY) * -8;
+
+
+            const rotateY =
+                ((x-centerX) /
+                centerX) * 8;
+
+
+            card.style.transform =
+                `perspective(800px)
+                 rotateX(${rotateX}deg)
+                 rotateY(${rotateY}deg)
+                 translateY(-5px)`;
+
+        }
+    );
+
+
+    card.addEventListener(
+        "mouseleave",
+        ()=>{
+
+            card.style.transform =
+                "perspective(800px) rotateX(0) rotateY(0)";
+
+        }
+    );
+
+});
 
 
 /* =========================================================
    MAGNETIC BUTTONS
 ========================================================= */
 
-document
-    .querySelectorAll(".magnetic")
-    .forEach(button => {
+document.querySelectorAll(
+    ".magnetic"
+).forEach(button=>{
+
+    button.addEventListener(
+        "mousemove",
+        e=>{
+
+            const rect =
+                button.getBoundingClientRect();
 
 
-        button.addEventListener(
-            "mousemove",
-            event => {
-
-                const rect =
-                    button.getBoundingClientRect();
+            const x =
+                e.clientX -
+                rect.left -
+                rect.width / 2;
 
 
-                const x =
-                    event.clientX -
-                    rect.left -
-                    rect.width / 2;
+            const y =
+                e.clientY -
+                rect.top -
+                rect.height / 2;
 
 
-                const y =
-                    event.clientY -
-                    rect.top -
-                    rect.height / 2;
+            button.style.transform =
+                `translate(${x*.18}px,
+                           ${y*.18}px)`;
+
+        }
+    );
 
 
-                button.style.transform =
-                    `translate(
-                        ${x * .18}px,
-                        ${y * .18}px
-                    )`;
+    button.addEventListener(
+        "mouseleave",
+        ()=>{
+
+            button.style.transform =
+                "";
+
+        }
+    );
+
+});
+
+
+/* =========================================================
+   SCROLL PARALLAX
+========================================================= */
+
+const showcaseCards =
+    document.querySelectorAll(
+        ".showcase-card"
+    );
+
+
+window.addEventListener(
+    "scroll",
+    ()=>{
+
+        const scrollY =
+            window.scrollY;
+
+
+        showcaseCards.forEach(
+            (card,index)=>{
+
+                const speed =
+                    (index+1) * .035;
+
+                card.style.translate =
+                    `0 ${scrollY *
+                    speed}px`;
 
             }
         );
 
+    }
+);
 
-        button.addEventListener(
-            "mouseleave",
-            () => {
 
-                button.style.transform =
-                    "translate(0,0)";
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
 
-            }
-        );
+const revealObserver =
+    new IntersectionObserver(
+        entries=>{
 
-    });
+            entries.forEach(
+                entry=>{
+
+                    if(
+                        entry.isIntersecting
+                    ){
+
+                        entry.target
+                            .classList
+                            .add("visible");
+
+                    }
+
+                }
+            );
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+
+document.querySelectorAll(
+    ".reveal"
+).forEach(
+    el=>{
+        revealObserver.observe(el);
+    }
+);
 
 
 /* =========================================================
    SERVICE MULTI SELECT
 ========================================================= */
 
-const serviceButtons =
+const serviceOptions =
     document.querySelectorAll(
-        ".service-option:not(.budget-option)"
+        ".service-option"
     );
 
 
-serviceButtons.forEach(button => {
+serviceOptions.forEach(
+    option=>{
 
-    button.addEventListener(
-        "click",
-        () => {
+        option.addEventListener(
+            "click",
+            ()=>{
 
-            button.classList.toggle(
-                "selected"
-            );
+                option.classList.toggle(
+                    "selected"
+                );
 
-        }
-    );
+            }
+        );
 
-});
+    }
+);
 
 
 /* =========================================================
    BUDGET SELECT
 ========================================================= */
 
-const budgetButtons =
+const choices =
     document.querySelectorAll(
-        ".budget-option"
+        ".choice"
     );
 
 
-budgetButtons.forEach(button => {
+choices.forEach(
+    choice=>{
 
-    button.addEventListener(
-        "click",
-        () => {
+        choice.addEventListener(
+            "click",
+            ()=>{
 
-            budgetButtons.forEach(
-                item =>
-                    item.classList.remove(
-                        "selected"
-                    )
-            );
+                choices.forEach(
+                    item=>{
+                        item.classList.remove(
+                            "selected"
+                        );
+                    }
+                );
 
 
-            button.classList.add(
-                "selected"
-            );
+                choice.classList.add(
+                    "selected"
+                );
 
-        }
-    );
+            }
+        );
 
-});
+    }
+);
 
 
 /* =========================================================
@@ -2192,96 +2787,81 @@ const form =
         "contactForm"
     );
 
-
-const success =
+const status =
     document.getElementById(
-        "successMessage"
+        "formStatus"
     );
 
 
 form.addEventListener(
     "submit",
-    event => {
+    e=>{
 
-        event.preventDefault();
-
-
-        const name =
-            document
-                .getElementById("name")
-                .value
-                .trim();
+        e.preventDefault();
 
 
-        const email =
-            document
-                .getElementById("email")
-                .value
-                .trim();
+        const selected =
+            document.querySelectorAll(
+                ".service-option.selected"
+            );
 
 
-        const message =
-            document
-                .getElementById("message")
-                .value
-                .trim();
+        if(selected.length === 0){
 
+            status.textContent =
+                "Please select at least one service.";
 
-        if(
-            !name ||
-            !email ||
-            !message
-        ){
+            status.style.color =
+                "#ff7777";
 
             return;
 
         }
 
 
-        const selectedServices =
-            [
-                ...document.querySelectorAll(
-                    ".service-option.selected:not(.budget-option)"
-                )
-            ];
-
-
-        const selectedBudget =
-            document.querySelector(
-                ".budget-option.selected"
+        const button =
+            form.querySelector(
+                ".submit-button"
             );
 
 
-        if(
-            selectedServices.length === 0
-        ){
-
-            alert(
-                "Please select at least one service."
-            );
-
-            return;
-
-        }
+        button.textContent =
+            "CREATING REQUEST...";
 
 
-        if(!selectedBudget){
-
-            alert(
-                "Please select your approximate budget."
-            );
-
-            return;
-
-        }
-
-
-        form.style.display =
+        button.style.pointerEvents =
             "none";
 
 
-        success.classList.add(
-            "show"
+        setTimeout(
+            ()=>{
+
+                button.textContent =
+                    "REQUEST READY ✓";
+
+
+                status.textContent =
+                    "Thanks! Your project brief has been captured.";
+
+                status.style.color =
+                    "var(--accent)";
+
+
+                setTimeout(
+                    ()=>{
+
+                        button.textContent =
+                            "SEND PROJECT REQUEST ↗";
+
+                        button.style.pointerEvents =
+                            "auto";
+
+                    },
+                    2500
+                );
+
+            },
+            1200
         );
 
     }
@@ -2289,50 +2869,74 @@ form.addEventListener(
 
 
 /* =========================================================
-   SCROLL REVEAL
+   SHOWCASE MOUSE DEPTH
 ========================================================= */
 
-const revealElements =
-    document.querySelectorAll(
-        ".reveal"
+const stage =
+    document.getElementById(
+        "showcaseStage"
     );
 
 
-const revealObserver =
-    new IntersectionObserver(
+stage.addEventListener(
+    "mousemove",
+    e=>{
 
-        entries => {
-
-            entries.forEach(
-                entry => {
-
-                    if(
-                        entry.isIntersecting
-                    ){
-
-                        entry.target.classList.add(
-                            "visible"
-                        );
-
-                    }
-
-                }
-            );
-
-        },
-
-        {
-            threshold:.12
-        }
-
-    );
+        const rect =
+            stage.getBoundingClientRect();
 
 
-revealElements.forEach(
-    element =>
-        revealObserver.observe(
-            element
-        )
+        const x =
+            (e.clientX -
+            rect.left) /
+            rect.width -
+            .5;
+
+
+        const y =
+            (e.clientY -
+            rect.top) /
+            rect.height -
+            .5;
+
+
+        showcaseCards.forEach(
+            (card,index)=>{
+
+                const depth =
+                    (index+1) * 8;
+
+
+                card.style.transform =
+                    `translate3d(
+                        ${x*depth}px,
+                        ${y*depth}px,
+                        0
+                    )
+                    rotateY(${x*10}deg)
+                    rotateX(${y*-8}deg)`;
+
+            }
+        );
+
+    }
+);
+
+
+stage.addEventListener(
+    "mouseleave",
+    ()=>{
+
+        showcaseCards.forEach(
+            (card,index)=>{
+
+                card.style.transform =
+                    "";
+
+            }
+        );
+
+    }
 );
 
 
@@ -2340,4 +2944,3 @@ revealElements.forEach(
 
 </body>
 </html>
-```
