@@ -1,13 +1,21 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>NOVA — Interactive Experience</title>
+<title>PRATEEK — Creative Design Studio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+/* =========================================================
+   RESET
+========================================================= */
 
 *{
     margin:0;
@@ -20,15 +28,27 @@ html{
 }
 
 body{
-    background:#050505;
+    background:#050507;
     color:#fff;
-    font-family:'Inter',sans-serif;
+    font-family:"Inter",sans-serif;
     overflow-x:hidden;
 }
 
-/* =========================
-   CURSOR
-========================= */
+a{
+    color:inherit;
+    text-decoration:none;
+}
+
+button,
+input,
+textarea{
+    font:inherit;
+}
+
+
+/* =========================================================
+   CUSTOM CURSOR
+========================================================= */
 
 .cursor{
     position:fixed;
@@ -37,7 +57,7 @@ body{
     border:1px solid rgba(255,255,255,.8);
     border-radius:50%;
     pointer-events:none;
-    z-index:9999;
+    z-index:99999;
     transform:translate(-50%,-50%);
     transition:
         width .25s ease,
@@ -50,108 +70,148 @@ body{
     position:fixed;
     width:5px;
     height:5px;
-    background:#fff;
     border-radius:50%;
+    background:white;
     pointer-events:none;
-    z-index:10000;
+    z-index:100000;
     transform:translate(-50%,-50%);
 }
 
-.cursor.active{
+.cursor.big{
     width:55px;
     height:55px;
     background:#fff;
 }
 
-/* =========================
+
+/* =========================================================
    BACKGROUND
-========================= */
+========================================================= */
 
 .background{
     position:fixed;
     inset:0;
-    overflow:hidden;
     pointer-events:none;
-    z-index:-2;
+    z-index:-10;
+    overflow:hidden;
 }
 
 .grid{
     position:absolute;
-    inset:-50%;
+    width:200%;
+    height:200%;
+    left:-50%;
+    top:-40%;
+
     background-image:
-        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
-        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
-    background-size:70px 70px;
-    transform:perspective(700px) rotateX(60deg) translateY(-120px);
+        linear-gradient(
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        ),
+        linear-gradient(
+            90deg,
+            rgba(255,255,255,.035) 1px,
+            transparent 1px
+        );
+
+    background-size:60px 60px;
+
+    transform:
+        perspective(700px)
+        rotateX(60deg);
 }
 
 .orb{
     position:absolute;
     border-radius:50%;
-    filter:blur(80px);
-    opacity:.45;
+    filter:blur(90px);
+    transition:transform 1.2s cubic-bezier(.16,1,.3,1);
 }
 
 .orb.one{
-    width:500px;
-    height:500px;
-    background:#6c3cff;
-    top:-200px;
-    left:-150px;
+    width:450px;
+    height:450px;
+    background:#6d28d9;
+    opacity:.22;
+    left:-180px;
+    top:-150px;
 }
 
 .orb.two{
-    width:450px;
-    height:450px;
-    background:#00d4ff;
-    right:-200px;
+    width:400px;
+    height:400px;
+    background:#06b6d4;
+    opacity:.16;
+    right:-180px;
     top:30%;
 }
 
 .orb.three{
-    width:400px;
-    height:400px;
-    background:#ff247f;
-    bottom:-200px;
+    width:350px;
+    height:350px;
+    background:#db2777;
+    opacity:.13;
     left:35%;
+    bottom:-200px;
 }
 
-/* =========================
+.noise{
+    position:absolute;
+    inset:0;
+    opacity:.035;
+    background-image:url(
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"
+    );
+}
+
+
+/* =========================================================
    NAVBAR
-========================= */
+========================================================= */
 
 nav{
     position:fixed;
     top:0;
     left:0;
     width:100%;
-    padding:28px 6%;
+
+    padding:
+        25px
+        clamp(22px,6vw,80px);
+
     display:flex;
     justify-content:space-between;
     align-items:center;
-    z-index:100;
-    backdrop-filter:blur(15px);
+
+    z-index:1000;
+
+    background:rgba(5,5,7,.45);
+    backdrop-filter:blur(18px);
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.05);
 }
 
 .logo{
-    font-size:22px;
+    font-size:21px;
     font-weight:800;
     letter-spacing:-1px;
 }
 
 .logo span{
-    color:#8f6cff;
+    color:#a78bfa;
 }
 
 .nav-links{
     display:flex;
-    gap:35px;
+    gap:30px;
 }
 
 .nav-links a{
-    color:#aaa;
-    text-decoration:none;
-    font-size:13px;
+    color:#85858d;
+    font-size:11px;
+    letter-spacing:.14em;
     transition:.3s;
 }
 
@@ -159,274 +219,799 @@ nav{
     color:#fff;
 }
 
-/* =========================
+
+/* =========================================================
    HERO
-========================= */
+========================================================= */
 
 .hero{
     min-height:100vh;
+
     display:flex;
     align-items:center;
-    justify-content:center;
-    text-align:center;
-    position:relative;
-    padding:100px 20px;
+
+    padding:
+        140px
+        clamp(22px,7vw,100px)
+        100px;
 }
 
 .hero-content{
-    max-width:1000px;
+    max-width:1100px;
 }
 
-.badge{
+.status{
     display:inline-flex;
     align-items:center;
-    gap:8px;
-    padding:9px 15px;
-    border:1px solid rgba(255,255,255,.12);
-    border-radius:50px;
-    background:rgba(255,255,255,.04);
-    color:#aaa;
-    font-size:12px;
-    margin-bottom:30px;
-    backdrop-filter:blur(10px);
+    gap:9px;
+
+    color:#888;
+    font-size:11px;
+    letter-spacing:.18em;
+
+    text-transform:uppercase;
 }
 
-.badge-dot{
+.status-dot{
     width:7px;
     height:7px;
+
     border-radius:50%;
-    background:#70ff8b;
-    box-shadow:0 0 15px #70ff8b;
+
+    background:#86efac;
+
+    box-shadow:
+        0 0 18px
+        #86efac;
 }
 
 .hero h1{
-    font-size:clamp(60px,10vw,150px);
-    line-height:.85;
-    letter-spacing:-8px;
+    font-size:
+        clamp(
+            60px,
+            10vw,
+            145px
+        );
+
+    line-height:.84;
+
+    letter-spacing:-.08em;
+
+    margin:
+        28px 0;
+
     font-weight:800;
 }
 
 .gradient-text{
-    background:linear-gradient(
-        90deg,
-        #fff,
-        #9f7cff,
-        #62e8ff,
-        #fff
-    );
-    background-size:300%;
+    background:
+        linear-gradient(
+            100deg,
+            #fff,
+            #a78bfa,
+            #67e8f9,
+            #fff
+        );
+
+    background-size:280%;
+
     -webkit-background-clip:text;
+    background-clip:text;
+
     color:transparent;
-    animation:gradient 6s infinite linear;
+
+    animation:
+        gradientMove
+        7s
+        linear
+        infinite;
 }
 
-@keyframes gradient{
-    0%{background-position:0%}
-    100%{background-position:300%}
+@keyframes gradientMove{
+
+    from{
+        background-position:0%;
+    }
+
+    to{
+        background-position:280%;
+    }
+
 }
 
-.hero p{
-    max-width:600px;
-    margin:35px auto;
-    color:#888;
-    line-height:1.7;
-    font-size:16px;
+.hero-description{
+    max-width:620px;
+
+    color:#85858d;
+
+    font-size:15px;
+
+    line-height:1.8;
 }
 
-.hero-buttons{
+.hero-actions{
+    margin-top:35px;
+
     display:flex;
-    justify-content:center;
-    gap:15px;
-    margin-top:30px;
+    gap:12px;
+
+    flex-wrap:wrap;
 }
 
 .btn{
-    padding:15px 25px;
-    border-radius:50px;
-    text-decoration:none;
-    font-size:13px;
-    transition:.3s;
-    display:inline-block;
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:
+        15px
+        22px;
+
+    border-radius:999px;
+
+    font-size:12px;
+
+    transition:
+        transform .3s,
+        box-shadow .3s,
+        border-color .3s;
 }
 
 .btn-primary{
     background:#fff;
-    color:#000;
+    color:#050507;
 }
 
 .btn-primary:hover{
-    box-shadow:0 0 40px rgba(255,255,255,.25);
+    box-shadow:
+        0 15px 50px
+        rgba(255,255,255,.15);
 }
 
 .btn-outline{
-    color:#fff;
-    border:1px solid #333;
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    color:#aaa;
 }
 
 .btn-outline:hover{
-    border-color:#777;
+    color:#fff;
+    border-color:#555;
 }
 
-/* =========================
-   SECTIONS
-========================= */
+
+/* =========================================================
+   SECTION
+========================================================= */
 
 section{
-    padding:140px 7%;
+    padding:
+        130px
+        clamp(22px,7vw,100px);
 }
 
 .section-label{
     color:#777;
-    font-size:12px;
-    letter-spacing:3px;
-    margin-bottom:25px;
+    font-size:11px;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    margin-bottom:22px;
 }
 
 .section-title{
-    font-size:clamp(40px,6vw,80px);
-    letter-spacing:-4px;
-    max-width:800px;
+    font-size:
+        clamp(
+            45px,
+            7vw,
+            90px
+        );
+
+    line-height:.95;
+
+    letter-spacing:-.065em;
+
+    max-width:900px;
 }
 
-/* =========================
-   CARDS
-========================= */
 
-.projects{
-    margin-top:70px;
+/* =========================================================
+   SERVICES
+========================================================= */
+
+.services{
+    margin-top:65px;
+
     display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:25px;
+
+    grid-template-columns:
+        repeat(
+            2,
+            minmax(0,1fr)
+        );
+
+    gap:15px;
 }
 
-.card{
-    min-height:420px;
-    border:1px solid rgba(255,255,255,.1);
-    border-radius:25px;
+.service-card{
     position:relative;
+
+    min-height:220px;
+
+    padding:30px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+
+    border-radius:24px;
+
+    background:
+        rgba(255,255,255,.025);
+
     overflow:hidden;
-    background:rgba(255,255,255,.025);
+
     transform-style:preserve-3d;
-    transition:border .3s;
+
+    transition:
+        border-color .3s,
+        background .3s;
 }
 
-.card:hover{
-    border-color:rgba(255,255,255,.3);
-}
+.service-card::before{
+    content:"";
 
-.card-bg{
     position:absolute;
-    inset:0;
-    opacity:.8;
-    transition:.5s;
-}
 
-.card:nth-child(1) .card-bg{
+    width:180px;
+    height:180px;
+
+    border-radius:50%;
+
     background:
-        radial-gradient(circle at 70% 30%,#714cff,transparent 35%),
-        linear-gradient(135deg,#111,#050505);
+        radial-gradient(
+            circle,
+            rgba(167,139,250,.22),
+            transparent 65%
+        );
+
+    left:
+        var(--mouse-x,50%);
+
+    top:
+        var(--mouse-y,50%);
+
+    transform:
+        translate(-50%,-50%);
+
+    opacity:0;
+
+    transition:opacity .3s;
+
+    pointer-events:none;
 }
 
-.card:nth-child(2) .card-bg{
-    background:
-        radial-gradient(circle at 30% 40%,#00d9ff,transparent 35%),
-        linear-gradient(135deg,#111,#050505);
+.service-card:hover{
+    border-color:
+        rgba(255,255,255,.22);
 }
 
-.card:nth-child(3) .card-bg{
-    background:
-        radial-gradient(circle at 70% 60%,#ff3f91,transparent 35%),
-        linear-gradient(135deg,#111,#050505);
+.service-card:hover::before{
+    opacity:1;
 }
 
-.card:nth-child(4) .card-bg{
-    background:
-        radial-gradient(circle at 30% 30%,#ffb13b,transparent 35%),
-        linear-gradient(135deg,#111,#050505);
+.service-number{
+    color:#666;
+
+    font-size:11px;
+
+    letter-spacing:.1em;
 }
 
-.card-content{
-    position:absolute;
-    bottom:0;
-    left:0;
-    width:100%;
-    padding:35px;
-    transform:translateZ(40px);
+.service-icon{
+    font-size:28px;
+
+    margin-top:35px;
 }
 
-.card-number{
-    color:#aaa;
+.service-card h3{
+    font-size:24px;
+
+    letter-spacing:-.04em;
+
+    margin-top:18px;
+}
+
+.service-card p{
+    color:#777;
+
     font-size:12px;
-    margin-bottom:12px;
+
+    line-height:1.6;
+
+    margin-top:8px;
 }
 
-.card h3{
-    font-size:32px;
-    margin-bottom:10px;
-}
 
-.card p{
-    color:#999;
-    font-size:13px;
-}
-
-/* =========================
-   BIG STATEMENT
-========================= */
+/* =========================================================
+   STATEMENT
+========================================================= */
 
 .statement{
-    min-height:80vh;
+    min-height:70vh;
+
     display:flex;
+
     align-items:center;
+
     justify-content:center;
+
     text-align:center;
 }
 
 .statement h2{
-    font-size:clamp(45px,8vw,110px);
-    line-height:.95;
-    letter-spacing:-5px;
     max-width:1100px;
+
+    font-size:
+        clamp(
+            48px,
+            8vw,
+            110px
+        );
+
+    line-height:.9;
+
+    letter-spacing:-.07em;
 }
 
-.statement span{
+.muted{
+    color:#4b4b52;
+}
+
+
+/* =========================================================
+   CONTACT
+========================================================= */
+
+.contact-wrapper{
+    margin-top:65px;
+
+    display:grid;
+
+    grid-template-columns:
+        minmax(0,1.2fr)
+        minmax(280px,.6fr);
+
+    gap:20px;
+}
+
+.contact-panel{
+    position:relative;
+
+    padding:32px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.09);
+
+    border-radius:25px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    backdrop-filter:blur(18px);
+
+    overflow:hidden;
+}
+
+.contact-panel::before{
+    content:"";
+
+    position:absolute;
+
+    width:300px;
+    height:300px;
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(124,58,237,.15),
+            transparent 70%
+        );
+
+    right:-150px;
+    top:-150px;
+
+    pointer-events:none;
+}
+
+.form-grid{
+    display:grid;
+
+    grid-template-columns:
+        1fr 1fr;
+
+    gap:20px;
+}
+
+.form-group{
+    margin-bottom:24px;
+}
+
+.form-group.full{
+    grid-column:
+        1 / -1;
+}
+
+.form-label{
+    display:block;
+
     color:#777;
+
+    font-size:10px;
+
+    letter-spacing:.16em;
+
+    text-transform:uppercase;
+
+    margin-bottom:9px;
 }
 
-/* =========================
+.field{
+    width:100%;
+
+    border:0;
+
+    border-bottom:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:transparent;
+
+    color:#fff;
+
+    outline:none;
+
+    padding:
+        13px
+        0;
+
+    font-size:14px;
+
+    resize:vertical;
+
+    transition:
+        border-color .3s;
+}
+
+.field:focus{
+    border-color:#a78bfa;
+}
+
+.field::placeholder{
+    color:#444;
+}
+
+
+/* =========================================================
+   SERVICE SELECTOR
+========================================================= */
+
+.service-selector{
+    display:flex;
+
+    flex-wrap:wrap;
+
+    gap:8px;
+}
+
+.service-option{
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:#888;
+
+    padding:
+        10px
+        14px;
+
+    border-radius:999px;
+
+    font-size:11px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+.service-option:hover{
+    color:#fff;
+
+    border-color:#666;
+
+    transform:translateY(-2px);
+}
+
+.service-option.selected{
+    color:#fff;
+
+    border-color:#8b5cf6;
+
+    background:
+        rgba(139,92,246,.16);
+
+    box-shadow:
+        0 0 25px
+        rgba(139,92,246,.1);
+}
+
+
+/* =========================================================
+   SUBMIT
+========================================================= */
+
+.submit{
+    width:100%;
+
+    border:0;
+
+    cursor:pointer;
+
+    padding:16px 20px;
+
+    border-radius:999px;
+
+    background:#fff;
+
+    color:#050507;
+
+    font-weight:600;
+
+    font-size:12px;
+
+    transition:.3s;
+}
+
+.submit:hover{
+    transform:translateY(-3px);
+
+    box-shadow:
+        0 15px 45px
+        rgba(255,255,255,.14);
+}
+
+
+/* =========================================================
+   CONTACT SIDE
+========================================================= */
+
+.side-title{
+    font-size:27px;
+
+    letter-spacing:-.04em;
+}
+
+.side-text{
+    color:#777;
+
+    font-size:13px;
+
+    line-height:1.7;
+
+    margin-top:12px;
+}
+
+.orbit{
+    height:260px;
+
+    margin-top:35px;
+
+    position:relative;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    overflow:hidden;
+
+    border-radius:20px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(139,92,246,.12),
+            transparent 65%
+        );
+}
+
+.ring{
+    position:absolute;
+
+    width:160px;
+    height:70px;
+
+    border:
+        1px solid
+        rgba(167,139,250,.35);
+
+    border-radius:50%;
+
+    transform:
+        rotateX(65deg)
+        rotateZ(20deg);
+
+    animation:
+        orbit 6s
+        linear
+        infinite;
+}
+
+.ring.two{
+    width:110px;
+    height:45px;
+
+    transform:
+        rotateX(65deg)
+        rotateZ(-35deg);
+
+    animation-duration:4s;
+}
+
+@keyframes orbit{
+
+    from{
+        transform:
+            rotateX(65deg)
+            rotateZ(0deg);
+    }
+
+    to{
+        transform:
+            rotateX(65deg)
+            rotateZ(360deg);
+    }
+
+}
+
+.planet{
+    width:15px;
+    height:15px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    box-shadow:
+        0 0 35px
+        #a78bfa;
+}
+
+.contact-meta{
+    margin-top:22px;
+
+    display:grid;
+
+    gap:10px;
+}
+
+.meta{
+    padding:14px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.06);
+
+    border-radius:14px;
+
+    color:#777;
+
+    font-size:11px;
+}
+
+.meta strong{
+    display:block;
+
+    color:#ddd;
+
+    margin-bottom:4px;
+}
+
+
+/* =========================================================
+   SUCCESS
+========================================================= */
+
+.success{
+    display:none;
+
+    padding:20px;
+
+    text-align:center;
+
+    border-radius:18px;
+
+    background:
+        rgba(134,239,172,.07);
+
+    border:
+        1px solid
+        rgba(134,239,172,.2);
+
+    color:#bbf7d0;
+
+    font-size:13px;
+}
+
+.success.show{
+    display:block;
+}
+
+
+/* =========================================================
    FOOTER
-========================= */
+========================================================= */
 
 footer{
-    padding:80px 7% 40px;
-    border-top:1px solid #151515;
+    padding:
+        70px
+        clamp(22px,7vw,100px)
+        35px;
+
+    border-top:
+        1px solid
+        rgba(255,255,255,.07);
 }
 
-.footer-top{
+.footer-row{
     display:flex;
+
     justify-content:space-between;
+
     align-items:center;
 }
 
-.footer-big{
-    font-size:clamp(40px,7vw,100px);
-    letter-spacing:-5px;
+.footer-logo{
+    font-size:35px;
+
     font-weight:800;
+
+    letter-spacing:-.06em;
 }
 
-footer p{
-    color:#666;
-    font-size:12px;
-    margin-top:50px;
+.footer-copy{
+    color:#555;
+
+    font-size:11px;
+
+    margin-top:40px;
 }
 
-/* =========================
+
+/* =========================================================
    REVEAL
-========================= */
+========================================================= */
 
 .reveal{
     opacity:0;
-    transform:translateY(60px);
+
+    transform:
+        translateY(50px);
+
     transition:
         opacity 1s ease,
         transform 1s cubic-bezier(.16,1,.3,1);
@@ -434,105 +1019,195 @@ footer p{
 
 .reveal.visible{
     opacity:1;
-    transform:translateY(0);
+
+    transform:
+        translateY(0);
 }
 
-/* =========================
+
+/* =========================================================
    RESPONSIVE
-========================= */
+========================================================= */
 
-@media(max-width:700px){
-
-    nav{
-        padding:20px;
-    }
+@media(max-width:750px){
 
     .nav-links{
         display:none;
     }
 
-    .hero h1{
-        letter-spacing:-4px;
+    .hero{
+        padding-top:150px;
     }
 
-    .projects{
+    .services{
         grid-template-columns:1fr;
     }
 
-    .hero-buttons{
-        flex-direction:column;
-        align-items:center;
+    .contact-wrapper{
+        grid-template-columns:1fr;
     }
 
-    .statement h2{
-        letter-spacing:-3px;
+    .form-grid{
+        grid-template-columns:1fr;
     }
 
-    .footer-top{
-        flex-direction:column;
+    .form-group.full{
+        grid-column:auto;
+    }
+
+    .footer-row{
         align-items:flex-start;
-        gap:30px;
+
+        flex-direction:column;
+
+        gap:20px;
     }
+
 }
+
+@media(max-width:500px){
+
+    .hero h1{
+        font-size:60px;
+    }
+
+    section{
+        padding-top:90px;
+        padding-bottom:90px;
+    }
+
+    .contact-panel{
+        padding:22px;
+    }
+
+}
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+        animation-duration:.01ms !important;
+        animation-iteration-count:1 !important;
+        scroll-behavior:auto !important;
+        transition-duration:.01ms !important;
+    }
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<!-- CURSOR -->
+
+<!-- =======================================================
+     CURSOR
+======================================================= -->
+
 <div class="cursor"></div>
 <div class="cursor-dot"></div>
 
-<!-- BACKGROUND -->
+
+<!-- =======================================================
+     BACKGROUND
+======================================================= -->
+
 <div class="background">
+
     <div class="grid"></div>
+
     <div class="orb one"></div>
     <div class="orb two"></div>
     <div class="orb three"></div>
+
+    <div class="noise"></div>
+
 </div>
 
-<!-- NAV -->
+
+<!-- =======================================================
+     NAVIGATION
+======================================================= -->
+
 <nav>
-    <div class="logo">N<span>O</span>VA.</div>
+
+    <a href="#" class="logo">
+        PRATEEK<span>.</span>
+    </a>
 
     <div class="nav-links">
-        <a href="#work">WORK</a>
-        <a href="#about">ABOUT</a>
-        <a href="#contact">CONTACT</a>
+
+        <a href="#work">
+            WORK
+        </a>
+
+        <a href="#services">
+            SERVICES
+        </a>
+
+        <a href="#contact">
+            CONTACT
+        </a>
+
     </div>
+
 </nav>
 
-<!-- HERO -->
+
+<!-- =======================================================
+     HERO
+======================================================= -->
+
 <header class="hero">
 
     <div class="hero-content reveal">
 
-        <div class="badge">
-            <span class="badge-dot"></span>
-            DIGITAL EXPERIENCE STUDIO
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            AVAILABLE FOR CREATIVE PROJECTS
+
         </div>
 
+
         <h1>
-            MOVE<br>
-            <span class="gradient-text">BEYOND</span>
+
+            DESIGN<br>
+
+            <span class="gradient-text">
+                WITHOUT LIMITS.
+            </span>
+
         </h1>
 
-        <p>
-            We create digital experiences where design,
-            technology and motion become one unforgettable
-            interaction.
+
+        <p class="hero-description">
+
+            Creative design solutions for brands,
+            businesses and digital experiences —
+            from visual identity and advertising to
+            3D, UI/UX and motion.
+
         </p>
 
-        <div class="hero-buttons">
 
-            <a href="#work"
-               class="btn btn-primary magnetic">
-                EXPLORE WORK →
+        <div class="hero-actions">
+
+            <a
+                href="#services"
+                class="btn btn-primary magnetic"
+            >
+                EXPLORE SERVICES →
             </a>
 
-            <a href="#contact"
-               class="btn btn-outline magnetic">
-                CONTACT
+            <a
+                href="#contact"
+                class="btn btn-outline magnetic"
+            >
+                START A PROJECT
             </a>
 
         </div>
@@ -541,302 +1216,1128 @@ footer p{
 
 </header>
 
-<!-- WORK -->
-<section id="work">
+
+<!-- =======================================================
+     SERVICES
+======================================================= -->
+
+<section id="services">
 
     <div class="section-label reveal">
-        SELECTED WORK / 01
+        WHAT I CREATE / 01
     </div>
+
 
     <h2 class="section-title reveal">
-        Designed to be
-        <span class="gradient-text">experienced.</span>
+
+        Ideas into
+        <span class="gradient-text">
+            visual experiences.
+        </span>
+
     </h2>
 
-    <div class="projects">
 
-        <div class="card reveal">
-            <div class="card-bg"></div>
+    <div class="services">
 
-            <div class="card-content">
-                <div class="card-number">01 / DIGITAL</div>
-                <h3>Quantum</h3>
-                <p>Immersive digital product experience.</p>
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                01 / CREATIVE
             </div>
-        </div>
 
-        <div class="card reveal">
-            <div class="card-bg"></div>
-
-            <div class="card-content">
-                <div class="card-number">02 / BRAND</div>
-                <h3>Atmos</h3>
-                <p>Next generation visual identity.</p>
+            <div class="service-icon">
+                ✦
             </div>
-        </div>
 
-        <div class="card reveal">
-            <div class="card-bg"></div>
+            <h3>
+                Graphic Design
+            </h3>
 
-            <div class="card-content">
-                <div class="card-number">03 / EXPERIENCE</div>
-                <h3>Pulse</h3>
-                <p>Interactive spatial interface.</p>
+            <p>
+                Visual concepts, social creatives,
+                digital artwork and professional
+                marketing designs.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                02 / 3D
             </div>
-        </div>
 
-        <div class="card reveal">
-            <div class="card-bg"></div>
-
-            <div class="card-content">
-                <div class="card-number">04 / MOTION</div>
-                <h3>Flux</h3>
-                <p>Motion driven digital storytelling.</p>
+            <div class="service-icon">
+                ◈
             </div>
-        </div>
+
+            <h3>
+                3D Design & Modeling
+            </h3>
+
+            <p>
+                Product visualization, 3D assets,
+                scenes, renders and creative
+                3D compositions.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                03 / ADVERTISING
+            </div>
+
+            <div class="service-icon">
+                ↗
+            </div>
+
+            <h3>
+                Advertising & Creative Campaigns
+            </h3>
+
+            <p>
+                Campaign visuals, promotional
+                creatives, digital advertising
+                and brand communication.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                04 / DIGITAL
+            </div>
+
+            <div class="service-icon">
+                ⌘
+            </div>
+
+            <h3>
+                UI/UX Design
+            </h3>
+
+            <p>
+                Modern interfaces, user experiences,
+                landing pages and digital products.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                05 / MARKETING
+            </div>
+
+            <div class="service-icon">
+                ▣
+            </div>
+
+            <h3>
+                Posters, Banners & Marketing Collateral
+            </h3>
+
+            <p>
+                Posters, banners, brochures,
+                promotional material and
+                business communication assets.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                06 / BRAND
+            </div>
+
+            <div class="service-icon">
+                ◎
+            </div>
+
+            <h3>
+                Brand & Business Design
+            </h3>
+
+            <p>
+                Brand visuals, business presentations,
+                identity systems and professional
+                communication design.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                07 / MOTION
+            </div>
+
+            <div class="service-icon">
+                ◌
+            </div>
+
+            <h3>
+                Motion Graphics & Animation
+            </h3>
+
+            <p>
+                Animated graphics, promotional motion,
+                product animation and visual storytelling.
+            </p>
+
+        </article>
+
+
+        <article class="service-card reveal">
+
+            <div class="service-number">
+                08 / CUSTOM
+            </div>
+
+            <div class="service-icon">
+                +
+            </div>
+
+            <h3>
+                Custom Creative Solutions
+            </h3>
+
+            <p>
+                Have something different in mind?
+                Let's create a solution around
+                your specific idea.
+            </p>
+
+        </article>
+
 
     </div>
 
 </section>
 
-<!-- STATEMENT -->
-<section id="about" class="statement">
+
+<!-- =======================================================
+     STATEMENT
+======================================================= -->
+
+<section class="statement">
 
     <h2 class="reveal">
+
         DON'T JUST
-        <span>LOOK.</span><br>
-        <span>INTERACT.</span>
+        <span class="muted">
+            LOOK.
+        </span>
+
+        <br>
+
+        MAKE IT
+        <span class="gradient-text">
+            FELT.
+        </span>
+
     </h2>
 
 </section>
 
-<!-- CONTACT -->
+
+<!-- =======================================================
+     CONTACT
+======================================================= -->
+
 <section id="contact">
 
     <div class="section-label reveal">
-        LET'S CREATE
+        LET'S WORK TOGETHER / 02
     </div>
 
+
     <h2 class="section-title reveal">
-        Something
-        <span class="gradient-text">unexpected.</span>
+
+        Have an idea?
+        <span class="gradient-text">
+            Let's build it.
+        </span>
+
     </h2>
+
+
+    <div class="contact-wrapper">
+
+
+        <!-- FORM -->
+
+        <div class="contact-panel reveal">
+
+            <form id="contactForm">
+
+
+                <div class="form-grid">
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Your name
+                        </label>
+
+                        <input
+                            class="field"
+                            id="name"
+                            type="text"
+                            placeholder="Your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label class="form-label">
+                            Email
+                        </label>
+
+                        <input
+                            class="field"
+                            id="email"
+                            type="email"
+                            placeholder="you@example.com"
+                            required
+                        >
+
+                    </div>
+
+
+                    <!-- SERVICES -->
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            What do you need designed?
+                        </label>
+
+
+                        <div class="service-selector">
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="Graphic Design"
+                            >
+                                Graphic Design
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="3D Design & Modeling"
+                            >
+                                3D Design & Modeling
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="Advertising & Creative Campaigns"
+                            >
+                                Advertising & Creative Campaigns
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="UI/UX Design"
+                            >
+                                UI/UX Design
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="Posters, Banners & Marketing Collateral"
+                            >
+                                Posters, Banners & Marketing Collateral
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="Brand & Business Design"
+                            >
+                                Brand & Business Design
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="Motion Graphics & Animation"
+                            >
+                                Motion Graphics & Animation
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option"
+                                data-service="Custom Creative Solutions"
+                            >
+                                Custom Creative Solutions
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- BUDGET -->
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Approximate budget
+                        </label>
+
+
+                        <div class="service-selector">
+
+
+                            <button
+                                type="button"
+                                class="service-option budget-option"
+                            >
+                                ₹10K – ₹25K
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option budget-option"
+                            >
+                                ₹25K – ₹50K
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option budget-option"
+                            >
+                                ₹50K – ₹1L
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option budget-option"
+                            >
+                                ₹1L+
+                            </button>
+
+
+                            <button
+                                type="button"
+                                class="service-option budget-option"
+                            >
+                                Let's Discuss
+                            </button>
+
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- MESSAGE -->
+
+                    <div class="form-group full">
+
+                        <label class="form-label">
+                            Project brief
+                        </label>
+
+                        <textarea
+                            class="field"
+                            id="message"
+                            rows="4"
+                            placeholder="Tell me about your idea, project or business..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <div class="form-group full">
+
+                        <button
+                            class="submit"
+                            type="submit"
+                        >
+                            SEND PROJECT REQUEST →
+                        </button>
+
+                    </div>
+
+
+                </div>
+
+            </form>
+
+
+            <div
+                class="success"
+                id="successMessage"
+            >
+
+                ✓ Project request prepared successfully.
+
+                <br><br>
+
+                Your selected services and project
+                information are ready to be connected
+                to your email or backend.
+
+            </div>
+
+        </div>
+
+
+        <!-- CONTACT INFO -->
+
+        <aside class="contact-panel reveal">
+
+
+            <div>
+
+                <div class="section-label">
+                    DIRECT CONNECTION
+                </div>
+
+
+                <h3 class="side-title">
+                    Let's make something
+                    <span class="gradient-text">
+                        remarkable.
+                    </span>
+                </h3>
+
+
+                <p class="side-text">
+
+                    No complicated process.
+                    Tell me what you're trying to
+                    create and I'll help turn the
+                    idea into a visual experience.
+
+                </p>
+
+
+                <div class="orbit">
+
+                    <div class="ring"></div>
+
+                    <div class="ring two"></div>
+
+                    <div class="planet"></div>
+
+                </div>
+
+
+                <div class="contact-meta">
+
+
+                    <div class="meta">
+
+                        <strong>
+                            Creative Direction
+                        </strong>
+
+                        From concept to final visual.
+
+                    </div>
+
+
+                    <div class="meta">
+
+                        <strong>
+                            Multiple Services
+                        </strong>
+
+                        Combine multiple design
+                        requirements in one project.
+
+                    </div>
+
+
+                    <div class="meta">
+
+                        <strong>
+                            Response
+                        </strong>
+
+                        Usually within 24–48 hours.
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </aside>
+
+
+    </div>
 
 </section>
 
-<!-- FOOTER -->
+
+<!-- =======================================================
+     FOOTER
+======================================================= -->
+
 <footer>
 
-    <div class="footer-top">
+    <div class="footer-row">
 
-        <div class="footer-big">
-            NOVA.
+        <div class="footer-logo">
+            PRATEEK<span style="color:#a78bfa">.</span>
         </div>
 
-        <a href="mailto:hello@example.com"
-           class="btn btn-primary magnetic">
+
+        <a
+            href="#contact"
+            class="btn btn-primary magnetic"
+        >
             START A PROJECT →
         </a>
 
     </div>
 
-    <p>
-        © 2026 NOVA Studio. All rights reserved.
+
+    <p class="footer-copy">
+        © 2026 Prateek. Creative design & digital experiences.
     </p>
 
 </footer>
 
 
+<!-- =======================================================
+     JAVASCRIPT
+======================================================= -->
+
 <script>
 
-/* =========================
-   CUSTOM CURSOR
-========================= */
+/* =========================================================
+   CURSOR
+========================================================= */
 
-const cursor = document.querySelector('.cursor');
-const dot = document.querySelector('.cursor-dot');
+const cursor =
+    document.querySelector(".cursor");
 
-let mouseX = window.innerWidth / 2;
-let mouseY = window.innerHeight / 2;
+const cursorDot =
+    document.querySelector(".cursor-dot");
 
-let cursorX = mouseX;
-let cursorY = mouseY;
+let mouseX =
+    window.innerWidth / 2;
 
-document.addEventListener('mousemove', e => {
+let mouseY =
+    window.innerHeight / 2;
 
-    mouseX = e.clientX;
-    mouseY = e.clientY;
+let cursorX =
+    mouseX;
 
-    dot.style.left = mouseX + 'px';
-    dot.style.top = mouseY + 'px';
-});
+let cursorY =
+    mouseY;
+
+
+document.addEventListener(
+    "mousemove",
+    event => {
+
+        mouseX =
+            event.clientX;
+
+        mouseY =
+            event.clientY;
+
+        cursorDot.style.left =
+            mouseX + "px";
+
+        cursorDot.style.top =
+            mouseY + "px";
+
+    }
+);
+
 
 function animateCursor(){
 
-    cursorX += (mouseX - cursorX) * .15;
-    cursorY += (mouseY - cursorY) * .15;
+    cursorX +=
+        (mouseX - cursorX) * .15;
 
-    cursor.style.left = cursorX + 'px';
-    cursor.style.top = cursorY + 'px';
+    cursorY +=
+        (mouseY - cursorY) * .15;
 
-    requestAnimationFrame(animateCursor);
+
+    cursor.style.left =
+        cursorX + "px";
+
+    cursor.style.top =
+        cursorY + "px";
+
+
+    requestAnimationFrame(
+        animateCursor
+    );
+
 }
 
 animateCursor();
 
 
-/* =========================
+/* =========================================================
    CURSOR HOVER
-========================= */
+========================================================= */
 
-document.querySelectorAll('a, .card').forEach(element => {
-
-    element.addEventListener('mouseenter', () => {
-        cursor.classList.add('active');
-    });
-
-    element.addEventListener('mouseleave', () => {
-        cursor.classList.remove('active');
-    });
-
-});
+document
+    .querySelectorAll(
+        "a,button,.service-card"
+    )
+    .forEach(element => {
 
 
-/* =========================
-   PARALLAX ORBS
-========================= */
+        element.addEventListener(
+            "mouseenter",
+            () => {
 
-const orbs = document.querySelectorAll('.orb');
+                cursor.classList.add(
+                    "big"
+                );
 
-document.addEventListener('mousemove', e => {
-
-    const x = (e.clientX / window.innerWidth - .5);
-    const y = (e.clientY / window.innerHeight - .5);
-
-    orbs.forEach((orb,index) => {
-
-        const strength = (index + 1) * 25;
-
-        orb.style.transform =
-            `translate(${x * strength}px, ${y * strength}px)`;
-
-    });
-
-});
+            }
+        );
 
 
-/* =========================
-   3D CARD TILT
-========================= */
+        element.addEventListener(
+            "mouseleave",
+            () => {
 
-document.querySelectorAll('.card').forEach(card => {
+                cursor.classList.remove(
+                    "big"
+                );
 
-    card.addEventListener('mousemove', e => {
-
-        const rect = card.getBoundingClientRect();
-
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-
-        const centerX = rect.width / 2;
-        const centerY = rect.height / 2;
-
-        const rotateX =
-            ((y - centerY) / centerY) * -7;
-
-        const rotateY =
-            ((x - centerX) / centerX) * 7;
-
-        card.style.transform =
-            `perspective(900px)
-             rotateX(${rotateX}deg)
-             rotateY(${rotateY}deg)
-             scale3d(1.02,1.02,1.02)`;
+            }
+        );
 
     });
 
-    card.addEventListener('mouseleave', () => {
 
-        card.style.transform =
-            `perspective(900px)
-             rotateX(0deg)
-             rotateY(0deg)
-             scale3d(1,1,1)`;
+/* =========================================================
+   BACKGROUND PARALLAX
+========================================================= */
 
-    });
+const orbOne =
+    document.querySelector(".orb.one");
 
-});
+const orbTwo =
+    document.querySelector(".orb.two");
+
+const orbThree =
+    document.querySelector(".orb.three");
 
 
-/* =========================
-   MAGNETIC BUTTON
-========================= */
-
-document.querySelectorAll('.magnetic').forEach(button => {
-
-    button.addEventListener('mousemove', e => {
-
-        const rect = button.getBoundingClientRect();
+document.addEventListener(
+    "mousemove",
+    event => {
 
         const x =
-            e.clientX -
-            rect.left -
-            rect.width / 2;
+            event.clientX /
+            window.innerWidth -
+            .5;
 
         const y =
-            e.clientY -
-            rect.top -
-            rect.height / 2;
+            event.clientY /
+            window.innerHeight -
+            .5;
 
-        button.style.transform =
-            `translate(${x * .2}px,${y * .2}px)`;
+
+        orbOne.style.transform =
+            `translate(${x * 45}px,${y * 40}px)`;
+
+
+        orbTwo.style.transform =
+            `translate(${x * -35}px,${y * -30}px)`;
+
+
+        orbThree.style.transform =
+            `translate(${x * 25}px,${y * 25}px)`;
+
+    }
+);
+
+
+/* =========================================================
+   SERVICE CARD SPOTLIGHT
+========================================================= */
+
+document
+    .querySelectorAll(".service-card")
+    .forEach(card => {
+
+
+        card.addEventListener(
+            "mousemove",
+            event => {
+
+                const rect =
+                    card.getBoundingClientRect();
+
+
+                const x =
+                    event.clientX -
+                    rect.left;
+
+
+                const y =
+                    event.clientY -
+                    rect.top;
+
+
+                const rotateX =
+                    ((y - rect.height / 2) /
+                    (rect.height / 2)) *
+                    -5;
+
+
+                const rotateY =
+                    ((x - rect.width / 2) /
+                    (rect.width / 2)) *
+                    5;
+
+
+                card.style.transform =
+                    `perspective(900px)
+                     rotateX(${rotateX}deg)
+                     rotateY(${rotateY}deg)
+                     scale(1.015)`;
+
+
+                card.style.setProperty(
+                    "--mouse-x",
+                    x + "px"
+                );
+
+
+                card.style.setProperty(
+                    "--mouse-y",
+                    y + "px"
+                );
+
+            }
+        );
+
+
+        card.addEventListener(
+            "mouseleave",
+            () => {
+
+                card.style.transform =
+                    "perspective(900px) rotateX(0) rotateY(0) scale(1)";
+
+            }
+        );
 
     });
 
-    button.addEventListener('mouseleave', () => {
 
-        button.style.transform =
-            'translate(0,0)';
+/* =========================================================
+   MAGNETIC BUTTONS
+========================================================= */
+
+document
+    .querySelectorAll(".magnetic")
+    .forEach(button => {
+
+
+        button.addEventListener(
+            "mousemove",
+            event => {
+
+                const rect =
+                    button.getBoundingClientRect();
+
+
+                const x =
+                    event.clientX -
+                    rect.left -
+                    rect.width / 2;
+
+
+                const y =
+                    event.clientY -
+                    rect.top -
+                    rect.height / 2;
+
+
+                button.style.transform =
+                    `translate(
+                        ${x * .18}px,
+                        ${y * .18}px
+                    )`;
+
+            }
+        );
+
+
+        button.addEventListener(
+            "mouseleave",
+            () => {
+
+                button.style.transform =
+                    "translate(0,0)";
+
+            }
+        );
 
     });
 
-});
+
+/* =========================================================
+   SERVICE MULTI SELECT
+========================================================= */
+
+const serviceButtons =
+    document.querySelectorAll(
+        ".service-option:not(.budget-option)"
+    );
 
 
-/* =========================
-   SCROLL REVEAL
-========================= */
+serviceButtons.forEach(button => {
 
-const revealElements =
-    document.querySelectorAll('.reveal');
+    button.addEventListener(
+        "click",
+        () => {
 
-const observer =
-    new IntersectionObserver(
-        entries => {
+            button.classList.toggle(
+                "selected"
+            );
 
-            entries.forEach(entry => {
-
-                if(entry.isIntersecting){
-
-                    entry.target.classList.add('visible');
-
-                }
-
-            });
-
-        },
-        {
-            threshold:.12
         }
     );
 
-revealElements.forEach(element => {
+});
 
-    observer.observe(element);
+
+/* =========================================================
+   BUDGET SELECT
+========================================================= */
+
+const budgetButtons =
+    document.querySelectorAll(
+        ".budget-option"
+    );
+
+
+budgetButtons.forEach(button => {
+
+    button.addEventListener(
+        "click",
+        () => {
+
+            budgetButtons.forEach(
+                item =>
+                    item.classList.remove(
+                        "selected"
+                    )
+            );
+
+
+            button.classList.add(
+                "selected"
+            );
+
+        }
+    );
 
 });
+
+
+/* =========================================================
+   FORM
+========================================================= */
+
+const form =
+    document.getElementById(
+        "contactForm"
+    );
+
+
+const success =
+    document.getElementById(
+        "successMessage"
+    );
+
+
+form.addEventListener(
+    "submit",
+    event => {
+
+        event.preventDefault();
+
+
+        const name =
+            document
+                .getElementById("name")
+                .value
+                .trim();
+
+
+        const email =
+            document
+                .getElementById("email")
+                .value
+                .trim();
+
+
+        const message =
+            document
+                .getElementById("message")
+                .value
+                .trim();
+
+
+        if(
+            !name ||
+            !email ||
+            !message
+        ){
+
+            return;
+
+        }
+
+
+        const selectedServices =
+            [
+                ...document.querySelectorAll(
+                    ".service-option.selected:not(.budget-option)"
+                )
+            ];
+
+
+        const selectedBudget =
+            document.querySelector(
+                ".budget-option.selected"
+            );
+
+
+        if(
+            selectedServices.length === 0
+        ){
+
+            alert(
+                "Please select at least one service."
+            );
+
+            return;
+
+        }
+
+
+        if(!selectedBudget){
+
+            alert(
+                "Please select your approximate budget."
+            );
+
+            return;
+
+        }
+
+
+        form.style.display =
+            "none";
+
+
+        success.classList.add(
+            "show"
+        );
+
+    }
+);
+
+
+/* =========================================================
+   SCROLL REVEAL
+========================================================= */
+
+const revealElements =
+    document.querySelectorAll(
+        ".reveal"
+    );
+
+
+const revealObserver =
+    new IntersectionObserver(
+
+        entries => {
+
+            entries.forEach(
+                entry => {
+
+                    if(
+                        entry.isIntersecting
+                    ){
+
+                        entry.target.classList.add(
+                            "visible"
+                        );
+
+                    }
+
+                }
+            );
+
+        },
+
+        {
+            threshold:.12
+        }
+
+    );
+
+
+revealElements.forEach(
+    element =>
+        revealObserver.observe(
+            element
+        )
+);
+
 
 </script>
 
 </body>
 </html>
+```
