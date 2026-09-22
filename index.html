@@ -3,191 +3,839 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>your data is processing to be stolen</title>
+
+<title>NOVA — Interactive Experience</title>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
 }
 
-body{
-    background:#000;
-    overflow:hidden;
-    font-family:Consolas, monospace;
-    color:#00ff00;
+html{
+    scroll-behavior:smooth;
 }
 
+body{
+    background:#050505;
+    color:#fff;
+    font-family:'Inter',sans-serif;
+    overflow-x:hidden;
+}
 
+/* =========================
+   CURSOR
+========================= */
 
+.cursor{
+    position:fixed;
+    width:18px;
+    height:18px;
+    border:1px solid rgba(255,255,255,.8);
+    border-radius:50%;
+    pointer-events:none;
+    z-index:9999;
+    transform:translate(-50%,-50%);
+    transition:
+        width .25s ease,
+        height .25s ease,
+        background .25s ease;
+    mix-blend-mode:difference;
+}
 
-canvas{
+.cursor-dot{
+    position:fixed;
+    width:5px;
+    height:5px;
+    background:#fff;
+    border-radius:50%;
+    pointer-events:none;
+    z-index:10000;
+    transform:translate(-50%,-50%);
+}
+
+.cursor.active{
+    width:55px;
+    height:55px;
+    background:#fff;
+}
+
+/* =========================
+   BACKGROUND
+========================= */
+
+.background{
+    position:fixed;
+    inset:0;
+    overflow:hidden;
+    pointer-events:none;
+    z-index:-2;
+}
+
+.grid{
+    position:absolute;
+    inset:-50%;
+    background-image:
+        linear-gradient(rgba(255,255,255,.035) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(255,255,255,.035) 1px,transparent 1px);
+    background-size:70px 70px;
+    transform:perspective(700px) rotateX(60deg) translateY(-120px);
+}
+
+.orb{
+    position:absolute;
+    border-radius:50%;
+    filter:blur(80px);
+    opacity:.45;
+}
+
+.orb.one{
+    width:500px;
+    height:500px;
+    background:#6c3cff;
+    top:-200px;
+    left:-150px;
+}
+
+.orb.two{
+    width:450px;
+    height:450px;
+    background:#00d4ff;
+    right:-200px;
+    top:30%;
+}
+
+.orb.three{
+    width:400px;
+    height:400px;
+    background:#ff247f;
+    bottom:-200px;
+    left:35%;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+nav{
     position:fixed;
     top:0;
     left:0;
-    z-index:-1;
+    width:100%;
+    padding:28px 6%;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    z-index:100;
+    backdrop-filter:blur(15px);
 }
 
-#container{
-    padding:20px;
+.logo{
+    font-size:22px;
+    font-weight:800;
+    letter-spacing:-1px;
 }
 
-#title{
-    font-size:32px;
-    text-shadow:0 0 15px #00ff00;
-    margin-bottom:15px;
+.logo span{
+    color:#8f6cff;
 }
 
-#countdown{
-    font-size:24px;
-    color:#00ff00;
-    margin-bottom:20px;
+.nav-links{
+    display:flex;
+    gap:35px;
 }
 
-#logs{
-    height:65vh;
+.nav-links a{
+    color:#aaa;
+    text-decoration:none;
+    font-size:13px;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:#fff;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    padding:100px 20px;
+}
+
+.hero-content{
+    max-width:1000px;
+}
+
+.badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:9px 15px;
+    border:1px solid rgba(255,255,255,.12);
+    border-radius:50px;
+    background:rgba(255,255,255,.04);
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:30px;
+    backdrop-filter:blur(10px);
+}
+
+.badge-dot{
+    width:7px;
+    height:7px;
+    border-radius:50%;
+    background:#70ff8b;
+    box-shadow:0 0 15px #70ff8b;
+}
+
+.hero h1{
+    font-size:clamp(60px,10vw,150px);
+    line-height:.85;
+    letter-spacing:-8px;
+    font-weight:800;
+}
+
+.gradient-text{
+    background:linear-gradient(
+        90deg,
+        #fff,
+        #9f7cff,
+        #62e8ff,
+        #fff
+    );
+    background-size:300%;
+    -webkit-background-clip:text;
+    color:transparent;
+    animation:gradient 6s infinite linear;
+}
+
+@keyframes gradient{
+    0%{background-position:0%}
+    100%{background-position:300%}
+}
+
+.hero p{
+    max-width:600px;
+    margin:35px auto;
+    color:#888;
+    line-height:1.7;
+    font-size:16px;
+}
+
+.hero-buttons{
+    display:flex;
+    justify-content:center;
+    gap:15px;
+    margin-top:30px;
+}
+
+.btn{
+    padding:15px 25px;
+    border-radius:50px;
+    text-decoration:none;
+    font-size:13px;
+    transition:.3s;
+    display:inline-block;
+}
+
+.btn-primary{
+    background:#fff;
+    color:#000;
+}
+
+.btn-primary:hover{
+    box-shadow:0 0 40px rgba(255,255,255,.25);
+}
+
+.btn-outline{
+    color:#fff;
+    border:1px solid #333;
+}
+
+.btn-outline:hover{
+    border-color:#777;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+section{
+    padding:140px 7%;
+}
+
+.section-label{
+    color:#777;
+    font-size:12px;
+    letter-spacing:3px;
+    margin-bottom:25px;
+}
+
+.section-title{
+    font-size:clamp(40px,6vw,80px);
+    letter-spacing:-4px;
+    max-width:800px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.projects{
+    margin-top:70px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:25px;
+}
+
+.card{
+    min-height:420px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:25px;
+    position:relative;
     overflow:hidden;
-    border:1px solid #00ff00;
-    padding:10px;
-    background:rgba(0,0,0,.6);
+    background:rgba(255,255,255,.025);
+    transform-style:preserve-3d;
+    transition:border .3s;
 }
 
-.line{
-    margin-bottom:8px;
-    animation:glow .5s ease;
+.card:hover{
+    border-color:rgba(255,255,255,.3);
 }
 
-@keyframes glow{
-    from{opacity:0}
-    to{opacity:1}
+.card-bg{
+    position:absolute;
+    inset:0;
+    opacity:.8;
+    transition:.5s;
 }
 
-.flash{
-    animation:flash 0.5s infinite alternate;
+.card:nth-child(1) .card-bg{
+    background:
+        radial-gradient(circle at 70% 30%,#714cff,transparent 35%),
+        linear-gradient(135deg,#111,#050505);
 }
 
-@keyframes flash{
-    from{opacity:1}
-    to{opacity:.5}
+.card:nth-child(2) .card-bg{
+    background:
+        radial-gradient(circle at 30% 40%,#00d9ff,transparent 35%),
+        linear-gradient(135deg,#111,#050505);
 }
+
+.card:nth-child(3) .card-bg{
+    background:
+        radial-gradient(circle at 70% 60%,#ff3f91,transparent 35%),
+        linear-gradient(135deg,#111,#050505);
+}
+
+.card:nth-child(4) .card-bg{
+    background:
+        radial-gradient(circle at 30% 30%,#ffb13b,transparent 35%),
+        linear-gradient(135deg,#111,#050505);
+}
+
+.card-content{
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:100%;
+    padding:35px;
+    transform:translateZ(40px);
+}
+
+.card-number{
+    color:#aaa;
+    font-size:12px;
+    margin-bottom:12px;
+}
+
+.card h3{
+    font-size:32px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#999;
+    font-size:13px;
+}
+
+/* =========================
+   BIG STATEMENT
+========================= */
+
+.statement{
+    min-height:80vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+}
+
+.statement h2{
+    font-size:clamp(45px,8vw,110px);
+    line-height:.95;
+    letter-spacing:-5px;
+    max-width:1100px;
+}
+
+.statement span{
+    color:#777;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    padding:80px 7% 40px;
+    border-top:1px solid #151515;
+}
+
+.footer-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.footer-big{
+    font-size:clamp(40px,7vw,100px);
+    letter-spacing:-5px;
+    font-weight:800;
+}
+
+footer p{
+    color:#666;
+    font-size:12px;
+    margin-top:50px;
+}
+
+/* =========================
+   REVEAL
+========================= */
 
 .reveal{
-    position:fixed;
-    inset:0;
-    background:black;
-    display:none;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    text-align:center;
-    z-index:999;
+    opacity:0;
+    transform:translateY(60px);
+    transition:
+        opacity 1s ease,
+        transform 1s cubic-bezier(.16,1,.3,1);
 }
 
-.reveal h1{
-    color:#00ff00;
-    font-size:60px;
-    margin-bottom:20px;
+.reveal.visible{
+    opacity:1;
+    transform:translateY(0);
 }
 
-.reveal p{
-    color:white;
-    font-size:24px;
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width:700px){
+
+    nav{
+        padding:20px;
+    }
+
+    .nav-links{
+        display:none;
+    }
+
+    .hero h1{
+        letter-spacing:-4px;
+    }
+
+    .projects{
+        grid-template-columns:1fr;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:center;
+    }
+
+    .statement h2{
+        letter-spacing:-3px;
+    }
+
+    .footer-top{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:30px;
+    }
 }
 </style>
 </head>
+
 <body>
-<audio id="sound" src="hack.mp3"></audio>
-<canvas id="matrix"></canvas>
 
-<div id="container">
-    <h1 id="title" class="flash">hello friends</h1>
-    <div id="countdown">30</div>
-    <div id="logs"></div>
+<!-- CURSOR -->
+<div class="cursor"></div>
+<div class="cursor-dot"></div>
+
+<!-- BACKGROUND -->
+<div class="background">
+    <div class="grid"></div>
+    <div class="orb one"></div>
+    <div class="orb two"></div>
+    <div class="orb three"></div>
 </div>
 
-<div class="reveal" id="reveal">
-    <h1>😂 PRANK COMPLETE!</h1>
-    <p>Your device is safe.<br>This was only a visual simulation.</p>
-</div>
+<!-- NAV -->
+<nav>
+    <div class="logo">N<span>O</span>VA.</div>
+
+    <div class="nav-links">
+        <a href="#work">WORK</a>
+        <a href="#about">ABOUT</a>
+        <a href="#contact">CONTACT</a>
+    </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+
+    <div class="hero-content reveal">
+
+        <div class="badge">
+            <span class="badge-dot"></span>
+            DIGITAL EXPERIENCE STUDIO
+        </div>
+
+        <h1>
+            MOVE<br>
+            <span class="gradient-text">BEYOND</span>
+        </h1>
+
+        <p>
+            We create digital experiences where design,
+            technology and motion become one unforgettable
+            interaction.
+        </p>
+
+        <div class="hero-buttons">
+
+            <a href="#work"
+               class="btn btn-primary magnetic">
+                EXPLORE WORK →
+            </a>
+
+            <a href="#contact"
+               class="btn btn-outline magnetic">
+                CONTACT
+            </a>
+
+        </div>
+
+    </div>
+
+</header>
+
+<!-- WORK -->
+<section id="work">
+
+    <div class="section-label reveal">
+        SELECTED WORK / 01
+    </div>
+
+    <h2 class="section-title reveal">
+        Designed to be
+        <span class="gradient-text">experienced.</span>
+    </h2>
+
+    <div class="projects">
+
+        <div class="card reveal">
+            <div class="card-bg"></div>
+
+            <div class="card-content">
+                <div class="card-number">01 / DIGITAL</div>
+                <h3>Quantum</h3>
+                <p>Immersive digital product experience.</p>
+            </div>
+        </div>
+
+        <div class="card reveal">
+            <div class="card-bg"></div>
+
+            <div class="card-content">
+                <div class="card-number">02 / BRAND</div>
+                <h3>Atmos</h3>
+                <p>Next generation visual identity.</p>
+            </div>
+        </div>
+
+        <div class="card reveal">
+            <div class="card-bg"></div>
+
+            <div class="card-content">
+                <div class="card-number">03 / EXPERIENCE</div>
+                <h3>Pulse</h3>
+                <p>Interactive spatial interface.</p>
+            </div>
+        </div>
+
+        <div class="card reveal">
+            <div class="card-bg"></div>
+
+            <div class="card-content">
+                <div class="card-number">04 / MOTION</div>
+                <h3>Flux</h3>
+                <p>Motion driven digital storytelling.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<!-- STATEMENT -->
+<section id="about" class="statement">
+
+    <h2 class="reveal">
+        DON'T JUST
+        <span>LOOK.</span><br>
+        <span>INTERACT.</span>
+    </h2>
+
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+
+    <div class="section-label reveal">
+        LET'S CREATE
+    </div>
+
+    <h2 class="section-title reveal">
+        Something
+        <span class="gradient-text">unexpected.</span>
+    </h2>
+
+</section>
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-top">
+
+        <div class="footer-big">
+            NOVA.
+        </div>
+
+        <a href="mailto:hello@example.com"
+           class="btn btn-primary magnetic">
+            START A PROJECT →
+        </a>
+
+    </div>
+
+    <p>
+        © 2026 NOVA Studio. All rights reserved.
+    </p>
+
+</footer>
+
 
 <script>
 
-// MATRIX EFFECT
-const canvas = document.getElementById("matrix");
-const ctx = canvas.getContext("2d");
-document.getElementById("sound").play();
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
+/* =========================
+   CUSTOM CURSOR
+========================= */
 
-const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-const size = 16;
-const columns = canvas.width / size;
-const drops = [];
+const cursor = document.querySelector('.cursor');
+const dot = document.querySelector('.cursor-dot');
 
-for(let x=0;x<columns;x++) drops[x]=1;
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
 
-function draw(){
-    ctx.fillStyle="rgba(0,0,0,0.05)";
-    ctx.fillRect(0,0,canvas.width,canvas.height);
+let cursorX = mouseX;
+let cursorY = mouseY;
 
-    ctx.fillStyle="#00ff00";
-    ctx.font=size+"px monospace";
+document.addEventListener('mousemove', e => {
 
-    for(let i=0;i<drops.length;i++){
-        const text=chars[Math.floor(Math.random()*chars.length)];
-        ctx.fillText(text,i*size,drops[i]*size);
+    mouseX = e.clientX;
+    mouseY = e.clientY;
 
-        if(drops[i]*size>canvas.height && Math.random()>0.975)
-            drops[i]=0;
+    dot.style.left = mouseX + 'px';
+    dot.style.top = mouseY + 'px';
+});
 
-        drops[i]++;
-    }
+function animateCursor(){
+
+    cursorX += (mouseX - cursorX) * .15;
+    cursorY += (mouseY - cursorY) * .15;
+
+    cursor.style.left = cursorX + 'px';
+    cursor.style.top = cursorY + 'px';
+
+    requestAnimationFrame(animateCursor);
 }
-setInterval(draw,35);
 
-// LOGS
-const logs=document.getElementById("logs");
+animateCursor();
 
-const messages=[
-"Initializing cyber simulation...",
-"Loading virtual environment...",
-"Connecting to test server...",
-"Analyzing sample data...",
-"Decrypting training packets...",
-"Reading sandbox memory...",
-"Checking virtual firewall...",
-"Generating random keys...",
-"Simulating network traffic...",
-"Finalizing challenge..."
-];
 
-let msgIndex=0;
+/* =========================
+   CURSOR HOVER
+========================= */
 
-const logInterval=setInterval(()=>{
-    const div=document.createElement("div");
-    div.className="line";
-    div.textContent="> "+messages[msgIndex % messages.length];
-    logs.appendChild(div);
-    logs.scrollTop=logs.scrollHeight;
-    msgIndex++;
-},900);
+document.querySelectorAll('a, .card').forEach(element => {
 
-// COUNTDOWN
-let time=30;
+    element.addEventListener('mouseenter', () => {
+        cursor.classList.add('active');
+    });
 
-const timer=setInterval(()=>{
-    time--;
-    document.getElementById("countdown").innerText=time;
+    element.addEventListener('mouseleave', () => {
+        cursor.classList.remove('active');
+    });
 
-    if(time<=0){
-        clearInterval(timer);
-        clearInterval(logInterval);
+});
 
-        document.getElementById("reveal").style.display="flex";
-    }
-},1000);
-document.getElementById("sound").play();
+
+/* =========================
+   PARALLAX ORBS
+========================= */
+
+const orbs = document.querySelectorAll('.orb');
+
+document.addEventListener('mousemove', e => {
+
+    const x = (e.clientX / window.innerWidth - .5);
+    const y = (e.clientY / window.innerHeight - .5);
+
+    orbs.forEach((orb,index) => {
+
+        const strength = (index + 1) * 25;
+
+        orb.style.transform =
+            `translate(${x * strength}px, ${y * strength}px)`;
+
+    });
+
+});
+
+
+/* =========================
+   3D CARD TILT
+========================= */
+
+document.querySelectorAll('.card').forEach(card => {
+
+    card.addEventListener('mousemove', e => {
+
+        const rect = card.getBoundingClientRect();
+
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+
+        const centerX = rect.width / 2;
+        const centerY = rect.height / 2;
+
+        const rotateX =
+            ((y - centerY) / centerY) * -7;
+
+        const rotateY =
+            ((x - centerX) / centerX) * 7;
+
+        card.style.transform =
+            `perspective(900px)
+             rotateX(${rotateX}deg)
+             rotateY(${rotateY}deg)
+             scale3d(1.02,1.02,1.02)`;
+
+    });
+
+    card.addEventListener('mouseleave', () => {
+
+        card.style.transform =
+            `perspective(900px)
+             rotateX(0deg)
+             rotateY(0deg)
+             scale3d(1,1,1)`;
+
+    });
+
+});
+
+
+/* =========================
+   MAGNETIC BUTTON
+========================= */
+
+document.querySelectorAll('.magnetic').forEach(button => {
+
+    button.addEventListener('mousemove', e => {
+
+        const rect = button.getBoundingClientRect();
+
+        const x =
+            e.clientX -
+            rect.left -
+            rect.width / 2;
+
+        const y =
+            e.clientY -
+            rect.top -
+            rect.height / 2;
+
+        button.style.transform =
+            `translate(${x * .2}px,${y * .2}px)`;
+
+    });
+
+    button.addEventListener('mouseleave', () => {
+
+        button.style.transform =
+            'translate(0,0)';
+
+    });
+
+});
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const revealElements =
+    document.querySelectorAll('.reveal');
+
+const observer =
+    new IntersectionObserver(
+        entries => {
+
+            entries.forEach(entry => {
+
+                if(entry.isIntersecting){
+
+                    entry.target.classList.add('visible');
+
+                }
+
+            });
+
+        },
+        {
+            threshold:.12
+        }
+    );
+
+revealElements.forEach(element => {
+
+    observer.observe(element);
+
+});
+
 </script>
 
 </body>
